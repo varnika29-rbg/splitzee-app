@@ -1,0 +1,2 @@
+# splitzee
+Expense splitting app

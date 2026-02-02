@@ -1,0 +1,22 @@
+{
+  "name": "Splitzee",
+  "short_name": "Splitzee",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1b2b7a",
+  "theme_color": "#2bb6a8",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/static/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Splitzee | Groups</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1b2b7a, #2f6db3, #2bb6a8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            width: 360px;
+            padding: 30px;
+            border-radius: 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h2 { color: #1b2b7a; }
+        .sub { color: #666; margin-bottom: 20px; }
+
+        .group-list a {
+            display: block;
+            padding: 14px;
+            margin-bottom: 10px;
+            border-radius: 25px;
+            background: #eef7f6;
+            color: #1b2b7a;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .group-list a:hover { background: #dff1ee; }
+
+        .empty { color: #777; margin-bottom: 20px; }
+
+        .action {
+            display: block;
+            padding: 14px;
+            border-radius: 25px;
+            background: #2bb6a8;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 12px;
+        }
+
+        .action.secondary {
+            background: #1b2b7a;
+        }
+
+        .logout {
+            font-size: 13px;
+            color: #888;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>Hello {{ username }}</h2>
+    <div class="sub">Active trips (not settled)</div>
+
+
+    <div class="group-list">
+        {% if groups %}
+            {% for g in groups %}
+                <a href="/group/{{ g.code }}">{{ g.name }}</a>
+            {% endfor %}
+        {% else %}
+            <div class="empty">No group yet</div>
+        {% endif %}
+    </div>
+
+    <a class="action" href="/create-group">➕ Create Group</a>
+    <a class="action" href="/join-group">🔗 Join Group</a>
+    <a class="action secondary" href="/history">📜 History</a>
+
+    <br>
+    <a class="logout" href="/logout">Logout</a>
+
+</div>
+
+</body>
+</html>

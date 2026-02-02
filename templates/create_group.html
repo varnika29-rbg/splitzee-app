@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Splitzee | Create Group</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(135deg,#1b2b7a,#2f6db3,#2bb6a8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            background: white;
+            width: 340px;
+            padding: 28px;
+            border-radius: 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1b2b7a;
+            margin-top: 0;
+            margin-bottom: 22px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border-radius: 14px;
+            border: 1px solid #ccc;
+            margin-bottom: 18px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border-radius: 25px;
+            border: none;
+            background: #2bb6a8;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Create Trip</h2>
+
+    <form method="POST">
+        <input type="text" name="trip_name" placeholder="Trip name (Goa, Manali)" required>
+        <button>Create Group</button>
+    </form>
+</div>
+
+</body>
+</html>

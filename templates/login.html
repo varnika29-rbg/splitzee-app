@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Splitzee | Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#2bb6a8">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1b2b7a, #2f6db3, #2bb6a8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            width: 320px;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            border: none;
+            background: #2bb6a8;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .otp-box {
+            margin: 15px 0;
+            font-size: 18px;
+            letter-spacing: 3px;
+            color: #1b2b7a;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        input, button {
+            width: 100%;
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <img src="{{ url_for('static', filename='icon.png') }}" width="60">
+
+    <h2>Splitzee</h2>
+
+    <!-- STEP 1: NAME + USERNAME -->
+    {% if step == "name" %}
+        <form method="POST">
+            <input type="hidden" name="action" value="generate_otp">
+
+            <input type="text"
+                   name="display_name"
+                   placeholder="Your name (shown to others)"
+                   required>
+
+            <input type="text"
+                   name="user_id"
+                   placeholder="Username (unique, no spaces)"
+                   required>
+
+            <button type="submit">Generate OTP</button>
+        </form>
+    {% endif %}
+
+    <!-- STEP 2: OTP -->
+    {% if step == "otp" %}
+        <p>Hello <b>{{ display_name }}</b></p>
+
+        <!-- DEV OTP DISPLAY -->
+        <div class="otp-box">OTP: {{ otp }}</div>
+
+        <form method="POST">
+            <input type="hidden" name="action" value="verify_otp">
+            <input type="text" name="otp" placeholder="Enter OTP" required>
+            <button type="submit">Verify & Login</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    {% endif %}
+
+</div>
+
+</body>
+</html>

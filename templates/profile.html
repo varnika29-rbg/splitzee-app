@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Splitzee | Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1b2b7a, #2f6db3, #2bb6a8);
+            padding: 16px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 420px;
+            margin: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            margin-top: 0;
+            text-align: center;
+            color: #1b2b7a;
+        }
+
+        h3 {
+            margin: 20px 0 10px;
+            color: #1b2b7a;
+            font-size: 18px;
+        }
+
+        /* LIST SEQUENCE */
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 6px;
+            font-size: 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .name {
+            color: #333;
+        }
+
+        .amount {
+            font-weight: bold;
+        }
+
+        .pay {
+            color: #e53935;
+        }
+
+        .get {
+            color: #2e7d32;
+        }
+
+        .empty {
+            font-size: 14px;
+            color: #666;
+            padding: 8px 0;
+        }
+
+        /* DANGER BUTTON */
+        .danger {
+            width: 100%;
+            padding: 13px;
+            margin-top: 18px;
+            border-radius: 25px;
+            border: none;
+            background: #c62828;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* ---------- CUSTOM MODAL ---------- */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-box {
+            background: white;
+            width: 90%;
+            max-width: 360px;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            animation: pop 0.2s ease-out;
+        }
+
+        @keyframes pop {
+            from { transform: scale(0.9); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-box h3 {
+            margin: 0;
+            color: #1b2b7a;
+        }
+
+        .modal-box p {
+            font-size: 14px;
+            color: #555;
+            margin: 12px 0 18px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 25px;
+            border: none;
+            font-size: 14px;
+        }
+
+        .btn.secondary {
+            background: #ccc;
+            color: #333;
+        }
+
+        .btn.danger {
+            background: #c62828;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>{{ username }}</h2>
+
+    <h3>💸 You need to PAY</h3>
+    {% if to_pay %}
+        <div class="list">
+            {% for person, amt in to_pay %}
+                <div class="row">
+                    <span class="name">{{ person }}</span>
+                    <span class="amount pay">₹{{ amt }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty">Nothing to pay 🎉</div>
+    {% endif %}
+
+    <h3>💰 You need to RECEIVE</h3>
+    {% if to_get %}
+        <div class="list">
+            {% for person, amt in to_get %}
+                <div class="row">
+                    <span class="name">{{ person }}</span>
+                    <span class="amount get">₹{{ amt }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty">Nothing to receive</div>
+    {% endif %}
+
+    <!-- DELETE ACCOUNT BUTTON -->
+    <button class="danger"
+        onclick="openConfirm(
+            'Delete Account',
+            'This will permanently delete your account and ALL data. This action cannot be undone.',
+            () => document.getElementById('deleteForm').submit()
+        )">
+        🗑 Delete Account Permanently
+    </button>
+
+    <form id="deleteForm" method="POST" action="/delete-account"></form>
+
+</div>
+
+<!-- CONFIRM MODAL -->
+<div id="confirmModal" class="modal">
+  <div class="modal-box">
+    <h3 id="modalTitle">Are you sure?</h3>
+    <p id="modalMessage">This action cannot be undone.</p>
+
+    <div class="modal-actions">
+      <button onclick="closeModal()" class="btn secondary">Cancel</button>
+      <button id="modalConfirmBtn" class="btn danger">Yes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let confirmAction = null;
+
+function openConfirm(title, message, action) {
+    document.getElementById("modalTitle").innerText = title;
+    document.getElementById("modalMessage").innerText = message;
+    document.getElementById("confirmModal").style.display = "flex";
+    confirmAction = action;
+}
+
+function closeModal() {
+    document.getElementById("confirmModal").style.display = "none";
+    confirmAction = null;
+}
+
+document.getElementById("modalConfirmBtn").onclick = function () {
+    if (confirmAction) confirmAction();
+    closeModal();
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Splitzee | Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg,#1b2b7a,#2f6db3,#2bb6a8);
+            padding: 16px;
+        }
+
+        .card {
+            background: white;
+            max-width: 420px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.2);
+        }
+
+        h2 {
+            margin: 0;
+            color: #1b2b7a;
+            text-align: center;
+        }
+
+        .code {
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin: 8px 0 14px;
+            color: #2bb6a8;
+        }
+
+        .section {
+            margin-top: 20px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            color: #1b2b7a;
+            margin-bottom: 8px;
+        }
+
+        .member {
+            font-size: 14px;
+            padding: 4px 0;
+        }
+
+        .expense {
+            padding: 12px 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .expense:last-child { border-bottom: none; }
+
+        .expense-title {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .expense-meta {
+            font-size: 13px;
+            color: #555;
+            margin-top: 4px;
+        }
+
+        .per-person {
+            font-size: 13px;
+            color: #2e7d32;
+            margin-top: 3px;
+        }
+
+        .expense-actions {
+            margin-top: 6px;
+        }
+
+        .expense-actions a {
+            font-size: 13px;
+            margin-right: 12px;
+            text-decoration: none;
+            color: #2f6db3;
+        }
+
+        .expense-actions a.delete {
+            color: #c62828;
+        }
+
+        .empty {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin: 12px 0;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 13px;
+            margin-top: 12px;
+            border-radius: 25px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 14px;
+            background: #2bb6a8;
+            color: white;
+        }
+
+        .btn.secondary {
+            background: #ccc;
+            color: #333;
+        }
+
+        /* ---------- CUSTOM MODAL ---------- */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-box {
+            background: white;
+            width: 90%;
+            max-width: 360px;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            animation: pop 0.2s ease-out;
+        }
+
+        @keyframes pop {
+            from { transform: scale(0.9); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-box h3 {
+            margin: 0;
+            color: #1b2b7a;
+        }
+
+        .modal-box p {
+            font-size: 14px;
+            color: #555;
+            margin: 12px 0 18px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+        }
+
+        .btn.danger {
+            background: #c62828;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>{{ group_name }}</h2>
+    <div class="code">{{ group_code }}</div>
+
+    <!-- MEMBERS -->
+    <div class="section">
+        <div class="section-title">Members</div>
+        {% for m in members %}
+            <div class="member">• {{ m.name }}</div>
+        {% endfor %}
+    </div>
+
+    <!-- EXPENSES -->
+    <div class="section">
+        <div class="section-title">Expenses</div>
+
+        {% if expenses %}
+            {% for e in expenses %}
+                {% set share = e.amount / (e.split_among | length) %}
+                <div class="expense">
+
+                    <div class="expense-title">
+                        {{ e.paid_by }} paid ₹{{ e.amount }} for {{ e.title }}
+                    </div>
+
+                    <div class="expense-meta">
+                        Split among {{ e.split_among | length }} people
+                    </div>
+
+                    <div class="per-person">
+                        → Per person pays ₹{{ "%.2f"|format(share) }}
+                    </div>
+
+                    <!-- EDIT / DELETE -->
+                    <div class="expense-actions">
+                        <a href="/edit-expense/{{ group_code }}/{{ e.expense_id }}">
+                            ✏️ Edit
+                        </a>
+
+                        <a href="javascript:void(0)"
+                           class="delete"
+                           onclick="openConfirm(
+                             'Delete Expense',
+                             'This expense will be permanently removed.',
+                             () => window.location.href='/delete-expense/{{ group_code }}/{{ e.expense_id }}'
+                           )">
+                           🗑 Delete
+                        </a>
+                    </div>
+
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty">No expenses added yet</div>
+        {% endif %}
+    </div>
+
+    <!-- ACTIONS (OUTSIDE LOOP) -->
+    <a class="btn" href="/add-expense/{{ group_code }}">➕ Add Expense</a>
+    <a class="btn" href="/group/{{ group_code }}/settle">💸 View Summary</a>
+    <a class="btn" href="/profile">👤 My Profile</a>
+    <a class="btn secondary" href="/groups">⬅ Back</a>
+
+</div>
+
+<!-- CONFIRM MODAL -->
+<div id="confirmModal" class="modal">
+  <div class="modal-box">
+    <h3 id="modalTitle">Are you sure?</h3>
+    <p id="modalMessage">This action cannot be undone.</p>
+
+    <div class="modal-actions">
+      <button onclick="closeModal()" class="btn secondary">Cancel</button>
+      <button id="modalConfirmBtn" class="btn danger">Yes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let confirmAction = null;
+
+function openConfirm(title, message, action) {
+    document.getElementById("modalTitle").innerText = title;
+    document.getElementById("modalMessage").innerText = message;
+    document.getElementById("confirmModal").style.display = "flex";
+    confirmAction = action;
+}
+
+function closeModal() {
+    document.getElementById("confirmModal").style.display = "none";
+    confirmAction = null;
+}
+
+document.getElementById("modalConfirmBtn").onclick = function () {
+    if (confirmAction) confirmAction();
+    closeModal();
+};
+</script>
+
+</body>
+</html>
