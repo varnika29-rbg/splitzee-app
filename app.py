@@ -318,7 +318,7 @@ def edit_expense(group_code, expense_id):
 
 # ================= SUMMARY =================
 
-@app.route("/group/<code>/settle")
+@app.route("/group/<code>/settle", strict_slashes=False)
 def group_settle(code):
     if "user_id" not in session:
         return redirect("/")
@@ -326,6 +326,9 @@ def group_settle(code):
     data = load_data()
     normalize_data(data)
     group = get_group(data, code)
+
+    if not group:
+        return "Group not found", 404
 
     balances = calculate_balances(group)
     settlements = settle_up(balances)
