@@ -171,7 +171,7 @@ def group_dashboard(code):
 
 # ================= SETTLE UP (FIXED) =================
 
-@app.route("/group/<code>/settle")
+@app.route("/group/<code>/settle", strict_slashes=False)
 def group_settle(code):
     if "user_id" not in session:
         return redirect("/")
@@ -186,12 +186,15 @@ def group_settle(code):
     balances = calculate_balances(group)
     settlements = settle_up(balances)
 
-    return render_template("group_settle.html",
-                           group_name=group["name"],
-                           group_code=code,
-                           settlements=settlements,
-                           total=total_expense(group),
-                           settled=group["settled"])
+    return render_template(
+        "group_settle.html",
+        group_name=group["name"],
+        group_code=code,
+        settlements=settlements,
+        total=total_expense(group),
+        settled=group["settled"]
+    )
+
 
 # ================= RUN =================
 
