@@ -9,32 +9,40 @@
             box-sizing: border-box;
         }
 
-       html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-}
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
 
-body {
-    font-family: Arial, sans-serif;
+        body {
+            font-family: Arial, sans-serif;
 
-    background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    background-attachment: fixed;
+            background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
 
-    background-color: #2bb6a8;
-}
+            background-color: #2bb6a8;
+        }
 
-
+        /* ✅ ONLY ADDITION FOR CENTERING */
+        .center-box {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;   /* horizontal center */
+            align-items: flex-start;   /* allow vertical scroll */
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
 
         .card {
             background: white;
             border-radius: 20px;
             padding: 20px;
             max-width: 420px;
-            margin: auto;
+            width: 100%;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
@@ -50,7 +58,6 @@ body {
             font-size: 18px;
         }
 
-        /* LIST SEQUENCE */
         .list {
             display: flex;
             flex-direction: column;
@@ -88,7 +95,6 @@ body {
             padding: 8px 0;
         }
 
-        /* DANGER BUTTON */
         .danger {
             width: 100%;
             padding: 13px;
@@ -100,7 +106,6 @@ body {
             font-size: 14px;
         }
 
-        /* ---------- CUSTOM MODAL ---------- */
         .modal {
             position: fixed;
             inset: 0;
@@ -164,49 +169,52 @@ body {
 
 <body>
 
-<div class="card">
+<div class="center-box">
 
-    <h2>{{ username }}</h2>
+    <div class="card">
 
-    <h3>💸 You need to PAY</h3>
-    {% if to_pay %}
-        <div class="list">
-            {% for person, amt in to_pay %}
-                <div class="row">
-                    <span class="name">{{ person }}</span>
-                    <span class="amount pay">₹{{ amt }}</span>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="empty">Nothing to pay 🎉</div>
-    {% endif %}
+        <h2>{{ username }}</h2>
 
-    <h3>💰 You need to RECEIVE</h3>
-    {% if to_get %}
-        <div class="list">
-            {% for person, amt in to_get %}
-                <div class="row">
-                    <span class="name">{{ person }}</span>
-                    <span class="amount get">₹{{ amt }}</span>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="empty">Nothing to receive</div>
-    {% endif %}
+        <h3>💸 You need to PAY</h3>
+        {% if to_pay %}
+            <div class="list">
+                {% for person, amt in to_pay %}
+                    <div class="row">
+                        <span class="name">{{ person }}</span>
+                        <span class="amount pay">₹{{ amt }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty">Nothing to pay 🎉</div>
+        {% endif %}
 
-    <!-- DELETE ACCOUNT BUTTON -->
-    <button class="danger"
-        onclick="openConfirm(
-            'Delete Account',
-            'This will permanently delete your account and ALL data. This action cannot be undone.',
-            () => document.getElementById('deleteForm').submit()
-        )">
-        🗑 Delete Account Permanently
-    </button>
+        <h3>💰 You need to RECEIVE</h3>
+        {% if to_get %}
+            <div class="list">
+                {% for person, amt in to_get %}
+                    <div class="row">
+                        <span class="name">{{ person }}</span>
+                        <span class="amount get">₹{{ amt }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty">Nothing to receive</div>
+        {% endif %}
 
-    <form id="deleteForm" method="POST" action="/delete-account"></form>
+        <button class="danger"
+            onclick="openConfirm(
+                'Delete Account',
+                'This will permanently delete your account and ALL data. This action cannot be undone.',
+                () => document.getElementById('deleteForm').submit()
+            )">
+            🗑 Delete Account Permanently
+        </button>
+
+        <form id="deleteForm" method="POST" action="/delete-account"></form>
+
+    </div>
 
 </div>
 

@@ -5,26 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-      
-      html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-}
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
 
-body {
-    font-family: Arial, sans-serif;
+        body {
+            font-family: Arial, sans-serif;
 
-    background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    background-attachment: fixed;
+            background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
 
-    background-color: #2bb6a8;
-}
+            background-color: #2bb6a8;
+        }
 
-
+        /* ✅ ONLY ADDITION FOR CENTERING */
+        .center-box {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
         .card {
             background: white;
@@ -65,13 +70,17 @@ body {
 
 <body>
 
-<div class="card">
-    <h2>Join Group</h2>
+<div class="center-box">
 
-    <form method="POST">
-        <input type="text" name="group_code" placeholder="Enter Group Code" required>
-        <button>Join Group</button>
-    </form>
+    <div class="card">
+        <h2>Join Group</h2>
+
+        <form method="POST">
+            <input type="text" name="group_code" placeholder="Enter Group Code" required>
+            <button>Join Group</button>
+        </form>
+    </div>
+
 </div>
 
 </body>

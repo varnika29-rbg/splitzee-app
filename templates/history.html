@@ -7,30 +7,38 @@
     <style>
         * { box-sizing: border-box; }
 
-      html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-}
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
 
-body {
-    font-family: Arial, sans-serif;
+        body {
+            font-family: Arial, sans-serif;
 
-    background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    background-attachment: fixed;
+            background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
 
-    background-color: #2bb6a8;
-}
+            background-color: #2bb6a8;
+        }
 
-
+        /* ✅ ONLY ADDITION FOR CENTERING */
+        .center-box {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;   /* horizontal center */
+            align-items: flex-start;   /* allow vertical scroll */
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
 
         .card {
             background: white;
             max-width: 420px;
-            margin: auto;
+            width: 100%;
             padding: 25px;
             border-radius: 22px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -87,32 +95,35 @@ body {
 
 <body>
 
-<div class="card">
+<div class="center-box">
 
-    <h2>{{ username }}’s Past Trips</h2>
+    <div class="card">
 
+        <h2>{{ username }}’s Past Trips</h2>
 
-    {% if groups %}
-        {% for g in groups %}
-            <div class="group">
-                <div class="group-name">{{ g.name }}</div>
-                <div class="status">
-                    {% if g.settled %}
-                        <span class="settled">✔ Settled</span>
-                    {% else %}
-                        <span class="open"> Settled</span>
-                    {% endif %}
+        {% if groups %}
+            {% for g in groups %}
+                <div class="group">
+                    <div class="group-name">{{ g.name }}</div>
+                    <div class="status">
+                        {% if g.settled %}
+                            <span class="settled">✔ Settled</span>
+                        {% else %}
+                            <span class="open">Settled</span>
+                        {% endif %}
+                    </div>
+
+                    <a class="btn" href="/group/{{ g.code }}/settle">View Summary</a>
                 </div>
+            {% endfor %}
+        {% else %}
+            <p>No history yet</p>
+        {% endif %}
 
-                <a class="btn" href="/group/{{ g.code }}/settle">View Summary</a>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>No history yet</p>
-    {% endif %}
+        <div class="back">
+            <a href="/groups">← Back to Groups</a>
+        </div>
 
-    <div class="back">
-        <a href="/groups">← Back to Groups</a>
     </div>
 
 </div>

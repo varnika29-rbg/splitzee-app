@@ -10,29 +10,35 @@
         }
 
         html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-}
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
 
-body {
-    font-family: Arial, sans-serif;
+        body {
+            font-family: Arial, sans-serif;
 
-    background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    background-attachment: fixed;
+            background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
 
-    background-color: #2bb6a8;
-}
+            background-color: #2bb6a8;
+        }
 
-
+        /* ✅ ONLY ADDITION FOR CENTERING */
+        .center-box {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
         .card {
             background: white;
             max-width: 420px;
-            margin: auto;
+            width: 100%;
             padding: 24px;
             border-radius: 22px;
             box-shadow: 0 10px 30px rgba(0,0,0,.2);
@@ -62,7 +68,6 @@ body {
             font-size: 14px;
         }
 
-        /* MEMBER ROW */
         .option {
             display: flex;
             justify-content: space-between;
@@ -110,60 +115,62 @@ body {
 
 <body>
 
-<div class="card">
-    <h2>Add Expense</h2>
+<div class="center-box">
 
-    <form method="POST">
+    <div class="card">
 
-        <!-- EXPENSE TITLE -->
-        <input
-            type="text"
-            name="title"
-            placeholder="Expense title (Food, Travel, Hotel)"
-            required
-        >
+        <h2>Add Expense</h2>
 
-        <!-- AMOUNT -->
-        <input
-            type="number"
-            step="0.01"
-            name="amount"
-            placeholder="Total amount"
-            required
-        >
+        <form method="POST">
 
-        <!-- PAID BY -->
-        <div class="section-title">Paid by</div>
-        {% for m in members %}
-            <div class="option">
-                <span>{{ m.name }}</span>
-                <input
-                    type="radio"
-                    name="paid_by"
-                    value="{{ m.id }}"
-                    required
-                >
-            </div>
-        {% endfor %}
+            <input
+                type="text"
+                name="title"
+                placeholder="Expense title (Food, Travel, Hotel)"
+                required
+            >
 
-        <!-- SPLIT AMONG -->
-        <div class="section-title">Split among</div>
-        {% for m in members %}
-            <div class="option">
-                <span>{{ m.name }}</span>
-                <input
-                    type="checkbox"
-                    name="split_among"
-                    value="{{ m.id }}"
-                    checked
-                >
-            </div>
-        {% endfor %}
+            <input
+                type="number"
+                step="0.01"
+                name="amount"
+                placeholder="Total amount"
+                required
+            >
 
-        <button type="submit">Add Expense</button>
-    </form>
+            <div class="section-title">Paid by</div>
+            {% for m in members %}
+                <div class="option">
+                    <span>{{ m.name }}</span>
+                    <input
+                        type="radio"
+                        name="paid_by"
+                        value="{{ m.id }}"
+                        required
+                    >
+                </div>
+            {% endfor %}
 
-    <a class="back" href="/group/{{ group_code }}">⬅ Back to Dashboard</a>
+            <div class="section-title">Split among</div>
+            {% for m in members %}
+                <div class="option">
+                    <span>{{ m.name }}</span>
+                    <input
+                        type="checkbox"
+                        name="split_among"
+                        value="{{ m.id }}"
+                        checked
+                    >
+                </div>
+            {% endfor %}
+
+            <button type="submit">Add Expense</button>
+        </form>
+
+        <a class="back" href="/group/{{ group_code }}">⬅ Back to Dashboard</a>
+
+    </div>
+
 </div>
 
 </body>

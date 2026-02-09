@@ -7,29 +7,38 @@
     <style>
         * { box-sizing: border-box; }
 
-      html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-}
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
 
-body {
-    font-family: Arial, sans-serif;
+        body {
+            font-family: Arial, sans-serif;
 
-    background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    background-attachment: fixed;
+            background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
 
-    background-color: #2bb6a8;
-}
+            background-color: #2bb6a8;
+        }
 
+        /* ✅ ONLY ADDITION FOR CENTERING */
+        .center-box {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;   /* horizontal center */
+            align-items: flex-start;   /* allow vertical scroll */
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
 
         .card {
             background: white;
             max-width: 420px;
-            margin: auto;
+            width: 100%;
             padding: 20px;
             border-radius: 22px;
             box-shadow: 0 10px 30px rgba(0,0,0,.2);
@@ -183,69 +192,69 @@ body {
 
 <body>
 
-<div class="card">
+<div class="center-box">
 
-    <h2>{{ group_name }}</h2>
-    <div class="code">{{ group_code }}</div>
+    <div class="card">
 
-    <!-- MEMBERS -->
-    <div class="section">
-        <div class="section-title">Members</div>
-        {% for m in members %}
-            <div class="member">• {{ m.name }}</div>
-        {% endfor %}
-    </div>
+        <h2>{{ group_name }}</h2>
+        <div class="code">{{ group_code }}</div>
 
-    <!-- EXPENSES -->
-    <div class="section">
-        <div class="section-title">Expenses</div>
-
-        {% if expenses %}
-            {% for e in expenses %}
-                {% set share = e.amount / (e.split_among | length) %}
-                <div class="expense">
-
-                    <div class="expense-title">
-                        {{ e.paid_by }} paid ₹{{ e.amount }} for {{ e.title }}
-                    </div>
-
-                    <div class="expense-meta">
-                        Split among {{ e.split_among | length }} people
-                    </div>
-
-                    <div class="per-person">
-                        → Per person pays ₹{{ "%.2f"|format(share) }}
-                    </div>
-
-                    <!-- EDIT / DELETE -->
-                    <div class="expense-actions">
-                        <a href="/edit-expense/{{ group_code }}/{{ e.expense_id }}">
-                            ✏️ Edit
-                        </a>
-
-                        <a href="javascript:void(0)"
-                           class="delete"
-                           onclick="openConfirm(
-                             'Delete Expense',
-                             'This expense will be permanently removed.',
-                             () => window.location.href='/delete-expense/{{ group_code }}/{{ e.expense_id }}'
-                           )">
-                           🗑 Delete
-                        </a>
-                    </div>
-
-                </div>
+        <!-- MEMBERS -->
+        <div class="section">
+            <div class="section-title">Members</div>
+            {% for m in members %}
+                <div class="member">• {{ m.name }}</div>
             {% endfor %}
-        {% else %}
-            <div class="empty">No expenses added yet</div>
-        {% endif %}
-    </div>
+        </div>
 
-    <!-- ACTIONS (OUTSIDE LOOP) -->
-    <a class="btn" href="/add-expense/{{ group_code }}">➕ Add Expense</a>
-    <a class="btn" href="/group/{{ group_code }}/settle">💸 View Summary</a>
-    <a class="btn" href="/profile">👤 My Profile</a>
-    <a class="btn secondary" href="/groups">⬅ Back</a>
+        <!-- EXPENSES -->
+        <div class="section">
+            <div class="section-title">Expenses</div>
+
+            {% if expenses %}
+                {% for e in expenses %}
+                    {% set share = e.amount / (e.split_among | length) %}
+                    <div class="expense">
+
+                        <div class="expense-title">
+                            {{ e.paid_by }} paid ₹{{ e.amount }} for {{ e.title }}
+                        </div>
+
+                        <div class="expense-meta">
+                            Split among {{ e.split_among | length }} people
+                        </div>
+
+                        <div class="per-person">
+                            → Per person pays ₹{{ "%.2f"|format(share) }}
+                        </div>
+
+                        <div class="expense-actions">
+                            <a href="/edit-expense/{{ group_code }}/{{ e.expense_id }}">✏️ Edit</a>
+
+                            <a href="javascript:void(0)"
+                               class="delete"
+                               onclick="openConfirm(
+                                 'Delete Expense',
+                                 'This expense will be permanently removed.',
+                                 () => window.location.href='/delete-expense/{{ group_code }}/{{ e.expense_id }}'
+                               )">
+                               🗑 Delete
+                            </a>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty">No expenses added yet</div>
+            {% endif %}
+        </div>
+
+        <a class="btn" href="/add-expense/{{ group_code }}">➕ Add Expense</a>
+        <a class="btn" href="/group/{{ group_code }}/settle">💸 View Summary</a>
+        <a class="btn" href="/profile">👤 My Profile</a>
+        <a class="btn secondary" href="/groups">⬅ Back</a>
+
+    </div>
 
 </div>
 

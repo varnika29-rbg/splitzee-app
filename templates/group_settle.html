@@ -6,94 +6,112 @@
 
     <style>
         html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-}
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
 
-body {
-    font-family: Arial, sans-serif;
+        body {
+            font-family: Arial, sans-serif;
 
-    background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    background-attachment: fixed;
+            background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
 
-    background-color: #2bb6a8;
-}
+            background-color: #2bb6a8;
+        }
 
+        /* ✅ ONLY ADDITION FOR CENTERING */
+        .center-box {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;   /* horizontal center */
+            align-items: flex-start;   /* allow vertical scroll */
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
 
         .card {
-            background:white;
-            max-width:420px;
-            margin:auto;
-            padding:20px;
-            border-radius:22px;
+            background: white;
+            max-width: 420px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 22px;
         }
+
         h2 {
-            text-align:center;
-            color:#1b2b7a;
+            text-align: center;
+            color: #1b2b7a;
         }
+
         .row {
-            display:flex;
-            justify-content:space-between;
-            padding:8px 0;
-            font-size:14px;
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
         }
-        hr { margin:14px 0; }
+
+        hr { margin: 14px 0; }
+
         a {
-            display:block;
-            margin-top:10px;
-            padding:12px;
-            text-align:center;
-            background:#2bb6a8;
-            color:white;
-            border-radius:20px;
-            text-decoration:none;
+            display: block;
+            margin-top: 10px;
+            padding: 12px;
+            text-align: center;
+            background: #2bb6a8;
+            color: white;
+            border-radius: 20px;
+            text-decoration: none;
         }
-        .gray { background:#ccc; color:#333; }
+
+        .gray {
+            background: #ccc;
+            color: #333;
+        }
     </style>
 </head>
 
 <body>
 
-<div class="card">
-    <h2>{{ group_name }}</h2>
+<div class="center-box">
 
-    <div class="row"><b>Total Expense</b><b>₹{{ total }}</b></div>
+    <div class="card">
+        <h2>{{ group_name }}</h2>
 
-    {% if top_payer %}
-        <div class="row">Paid most: {{ top_payer }} (₹{{ top_paid }})</div>
-    {% endif %}
+        <div class="row"><b>Total Expense</b><b>₹{{ total }}</b></div>
 
-    {% if top_ower %}
-        <div class="row">Owes most: {{ top_ower }} (₹{{ top_owed }})</div>
-    {% endif %}
+        {% if top_payer %}
+            <div class="row">Paid most: {{ top_payer }} (₹{{ top_paid }})</div>
+        {% endif %}
 
-    <hr>
+        {% if top_ower %}
+            <div class="row">Owes most: {{ top_ower }} (₹{{ top_owed }})</div>
+        {% endif %}
 
-    {% if settlements %}
-        {% for owe,get,amt in settlements %}
-            <div class="row">
-                <span>{{ owe }} → {{ get }}</span>
-                <span>₹{{ amt }}</span>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p style="text-align:center;">All settled 🎉</p>
-    {% endif %}
+        <hr>
 
-    {% if not settled %}
-        <a href="/group/{{ group_code }}/mark-settled">✅ Mark as Settled</a>
-    {% endif %}
+        {% if settlements %}
+            {% for owe,get,amt in settlements %}
+                <div class="row">
+                    <span>{{ owe }} → {{ get }}</span>
+                    <span>₹{{ amt }}</span>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align:center;">All settled 🎉</p>
+        {% endif %}
 
-    <!-- ✅ PROFILE BUTTON -->
-   <a href="/profile">👤 My Profile</a>
+        {% if not settled %}
+            <a href="/group/{{ group_code }}/mark-settled">✅ Mark as Settled</a>
+        {% endif %}
 
+        <a href="/profile">👤 My Profile</a>
+        <a href="/group/{{ group_code }}" class="gray">⬅ Back</a>
+        <a href="/groups" class="gray">Groups</a>
+    </div>
 
-    <a href="/group/{{ group_code }}" class="gray">⬅ Back</a>
-    <a href="/groups" class="gray">Groups</a>
 </div>
 
 </body>
