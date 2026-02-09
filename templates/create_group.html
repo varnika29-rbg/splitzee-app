@@ -5,17 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        body {
+     html, body {
     margin: 0;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-    background: url("{{ url_for('static', filename='app-bg.jpeg') }}") no-repeat center top;
-    background-size: 85%;
-    background-color: #2bb6a8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 0;
+    min-height: 100vh;
 }
+
+body {
+    font-family: Arial, sans-serif;
+
+    background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+
+    background-color: #2bb6a8;
+}
+
+
 
         .card {
             background: white;
