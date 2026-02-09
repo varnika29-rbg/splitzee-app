@@ -7,13 +7,17 @@
     <style>
         * { box-sizing: border-box; }
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg,#1b2b7a,#2f6db3,#2bb6a8);
-            padding: 16px;
-        }
-
+         body {
+    margin: 0;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background: url("{{ url_for('static', filename='app-bg.jpeg') }}") no-repeat center top;
+    background-size: 85%;
+    background-color: #2bb6a8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
         .card {
             background: white;
             max-width: 420px;
