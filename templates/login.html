@@ -11,27 +11,33 @@
             box-sizing: border-box;
         }
 
- html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-}
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
 
-body {
-    font-family: Arial, sans-serif;
+        body {
+            font-family: Arial, sans-serif;
 
-    /* TRUE BACKGROUND */
-    background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    background-attachment: fixed;
+            /* TRUE BACKGROUND */
+            background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
 
-    /* fallback color */
-    background-color: #2bb6a8;
-}
+            /* fallback color */
+            background-color: #2bb6a8;
+        }
 
-
+        /* ✅ ONLY ADDITION FOR CENTERING */
+        .center-box {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
         .card {
             background: white;
@@ -83,48 +89,51 @@ body {
 
 <body>
 
-<div class="card">
+<div class="center-box">
 
-    <img src="{{ url_for('static', filename='icon.png') }}" width="60">
+    <div class="card">
 
-    <h2>Splitzee</h2>
+        <img src="{{ url_for('static', filename='icon.png') }}" width="60">
 
-    <!-- STEP 1: NAME + USERNAME -->
-    {% if step == "name" %}
-        <form method="POST">
-            <input type="hidden" name="action" value="generate_otp">
+        <h2>Splitzee</h2>
 
-            <input type="text"
-                   name="display_name"
-                   placeholder="Your name (shown to others)"
-                   required>
+        <!-- STEP 1: NAME + USERNAME -->
+        {% if step == "name" %}
+            <form method="POST">
+                <input type="hidden" name="action" value="generate_otp">
 
-            <input type="text"
-                   name="user_id"
-                   placeholder="Username (unique, no spaces)"
-                   required>
+                <input type="text"
+                       name="display_name"
+                       placeholder="Your name (shown to others)"
+                       required>
 
-            <button type="submit">Generate OTP</button>
-        </form>
-    {% endif %}
+                <input type="text"
+                       name="user_id"
+                       placeholder="Username (unique, no spaces)"
+                       required>
 
-    <!-- STEP 2: OTP -->
-    {% if step == "otp" %}
-        <p>Hello <b>{{ display_name }}</b></p>
-
-        <!-- DEV OTP DISPLAY -->
-        <div class="otp-box">OTP: {{ otp }}</div>
-
-        <form method="POST">
-            <input type="hidden" name="action" value="verify_otp">
-            <input type="text" name="otp" placeholder="Enter OTP" required>
-            <button type="submit">Verify & Login</button>
-        </form>
-
-        {% if error %}
-            <p class="error">{{ error }}</p>
+                <button type="submit">Generate OTP</button>
+            </form>
         {% endif %}
-    {% endif %}
+
+        <!-- STEP 2: OTP -->
+        {% if step == "otp" %}
+            <p>Hello <b>{{ display_name }}</b></p>
+
+            <div class="otp-box">OTP: {{ otp }}</div>
+
+            <form method="POST">
+                <input type="hidden" name="action" value="verify_otp">
+                <input type="text" name="otp" placeholder="Enter OTP" required>
+                <button type="submit">Verify & Login</button>
+            </form>
+
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+        {% endif %}
+
+    </div>
 
 </div>
 
