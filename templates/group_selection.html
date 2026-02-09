@@ -25,14 +25,12 @@
             background-color: #2bb6a8;
         }
 
-        /* ✅ FIXED CENTERING (REAL-APP STYLE) */
+        /* ✅ ACTUAL CENTERING */
         .center-box {
             min-height: 100vh;
             display: flex;
-            justify-content: center;   /* horizontal center */
-            align-items: flex-start;   /* NOT vertical center */
-            padding-top: 60px;
-            padding-bottom: 40px;
+            justify-content: center;
+            align-items: center;   /* ← THIS is the real fix */
         }
 
         .card {
