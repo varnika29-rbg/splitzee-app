@@ -48,6 +48,13 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
+        /* ✅ ONLY CHANGE: LOGO SIZE */
+        .app-logo {
+            width: 120px;      /* wider & bigger */
+            height: auto;      /* keeps proportion */
+            margin-bottom: 10px;
+        }
+
         input {
             width: 100%;
             padding: 12px;
@@ -93,7 +100,8 @@
 
     <div class="card">
 
-        <img src="{{ url_for('static', filename='icon.png') }}" width="60">
+        <!-- ✅ ONLY CHANGE HERE -->
+        <img src="{{ url_for('static', filename='icon.png') }}" class="app-logo">
 
         <h2>Splitzee</h2>
 
