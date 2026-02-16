@@ -36,12 +36,19 @@ def load_data():
     cursor = conn.cursor()
     cursor.execute("SELECT data FROM app_data WHERE id=1")
     row = cursor.fetchone()
-    conn.close()
 
-    if row:
-        return json.loads(row[0])
-    else:
-        return {"user": {}, "groups": []}
+    if not row:
+        default_data = {"user": {}, "groups": []}
+        cursor.execute(
+            "INSERT INTO app_data (id, data) VALUES (1, ?)",
+            (json.dumps(default_data),)
+        )
+        conn.commit()
+        conn.close()
+        return default_data
+
+    conn.close()
+    return json.loads(row[0])
 
 
 
