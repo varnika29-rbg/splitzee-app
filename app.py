@@ -4,7 +4,7 @@ import json, random, string, sqlite3
 
 app = Flask(__name__)
 app.secret_key = "splitzee-secret-key"
-
+init_db()
 
 # ================= HELPERS =================
 
@@ -480,5 +480,5 @@ def delete_account():
 
 # ================= RUN =================
 if __name__ == "__main__":
-    init_db()
     app.run()
+
