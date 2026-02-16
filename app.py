@@ -1,21 +1,60 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
-import json, os, random, string
+import json, random, string, sqlite3
+
 
 app = Flask(__name__)
 app.secret_key = "splitzee-secret-key"
-DATA_FILE = "data.json"
+
 
 # ================= HELPERS =================
 
+def init_db():
+    conn = sqlite3.connect("splitzee.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS app_data (
+            id INTEGER PRIMARY KEY,
+            data TEXT
+        )
+    """)
+
+    cursor.execute("SELECT COUNT(*) FROM app_data")
+    if cursor.fetchone()[0] == 0:
+        default_data = {"user": {}, "groups": []}
+        cursor.execute(
+            "INSERT INTO app_data (id, data) VALUES (1, ?)",
+            (json.dumps(default_data),)
+        )
+
+    conn.commit()
+    conn.close()
+
+
 def load_data():
-    if not os.path.exists(DATA_FILE):
+    conn = sqlite3.connect("splitzee.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT data FROM app_data WHERE id=1")
+    row = cursor.fetchone()
+    conn.close()
+
+    if row:
+        return json.loads(row[0])
+    else:
         return {"user": {}, "groups": []}
-    with open(DATA_FILE, "r") as f:
-        return json.load(f)
+
+
 
 def save_data(data):
-    with open(DATA_FILE, "w") as f:
-        json.dump(data, f, indent=2)
+    conn = sqlite3.connect("splitzee.db")
+    cursor = conn.cursor()
+    cursor.execute(
+        "UPDATE app_data SET data=? WHERE id=1",
+        (json.dumps(data),)
+    )
+    conn.commit()
+    conn.close()
+
 
 def generate_group_code():
     return "".join(random.choices(string.ascii_uppercase + string.digits, k=6))
@@ -433,6 +472,6 @@ def delete_account():
 
 
 # ================= RUN =================
-
 if __name__ == "__main__":
+    init_db()
     app.run()
