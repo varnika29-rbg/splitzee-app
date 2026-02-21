@@ -5,13 +5,6 @@ import json, random, string, sqlite3
 app = Flask(__name__)
 app.secret_key = "splitzee-secret-key"
 
-# define init_db() here
-
-def init_db():
-    ...
-
-# after function definitions
-init_db()
 
 
 # ================= HELPERS =================
