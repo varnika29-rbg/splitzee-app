@@ -475,5 +475,6 @@ def delete_account():
 
 # ================= RUN =================
 if __name__ == "__main__":
-    app.run()
+    # app.run()  (RENDER)
 
+ app.run(host="0.0.0.0", port=5000, debug=True)  #(LOCALHOST)
