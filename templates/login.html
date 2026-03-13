@@ -1,147 +1,185 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Splitzee | Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="/static/manifest.json">
-    <meta name="theme-color" content="#2bb6a8">
+<title>Splitzee | Login</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/static/manifest.json">
+<meta name="theme-color" content="#2bb6a8">
 
-        html, body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-        }
+<style>
 
-        body {
-            font-family: Arial, sans-serif;
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
 
-            /* TRUE BACKGROUND */
-            background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
-            background-attachment: fixed;
+html,body{
+height:100%;
+}
 
-            /* fallback color */
-            background-color: #2bb6a8;
-        }
+/* BACKGROUND */
 
-        /* ✅ ONLY ADDITION FOR CENTERING */
-        .center-box {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+body{
+font-family: Arial, sans-serif;
+background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
+background-repeat:no-repeat;
+background-position:center;
+background-size:cover;
+display:flex;
+justify-content:center;
+align-items:center;
+}
 
-        .card {
-            background: white;
-            width: 320px;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
+/* CENTER CONTAINER */
 
-        /* ✅ ONLY CHANGE: LOGO SIZE */
-        .app-logo {
-            width: 120px;      /* wider & bigger */
-            height: auto;      /* keeps proportion */
-            margin-bottom: 10px;
-        }
+.center-box{
+width:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+}
 
-        input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid #ccc;
-            margin-bottom: 15px;
-        }
+/* LOGIN CARD */
 
-        button {
-            width: 100%;
-            padding: 12px;
-            border-radius: 25px;
-            border: none;
-            background: #2bb6a8;
-            color: white;
-            font-size: 15px;
-            cursor: pointer;
-        }
+.card{
+background:rgba(255,255,255,0.95);
+width:340px;
+padding:35px;
+border-radius:22px;
+text-align:center;
+box-shadow:0 15px 40px rgba(0,0,0,0.25);
+backdrop-filter:blur(6px);
+}
 
-        .otp-box {
-            margin: 15px 0;
-            font-size: 18px;
-            letter-spacing: 3px;
-            color: #1b2b7a;
-            font-weight: bold;
-        }
+/* LOGO */
 
-        .error {
-            color: red;
-            font-size: 14px;
-        }
+.app-logo{
+width:100px;
+margin-bottom:10px;
+}
 
-        input, button {
-            width: 100%;
-            max-width: 100%;
-        }
-    </style>
+/* TITLE */
+
+h2{
+margin-bottom:15px;
+color:#1b2b7a;
+}
+
+/* INPUT */
+
+input{
+width:100%;
+padding:13px;
+border-radius:12px;
+border:1px solid #ddd;
+margin-bottom:15px;
+font-size:14px;
+transition:0.2s;
+}
+
+input:focus{
+border-color:#2bb6a8;
+outline:none;
+box-shadow:0 0 6px rgba(43,182,168,0.3);
+}
+
+/* BUTTON */
+
+button{
+width:100%;
+padding:13px;
+border-radius:25px;
+border:none;
+background:linear-gradient(135deg,#2bb6a8,#1a8f84);
+color:white;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+transition:0.2s;
+}
+
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* OTP BOX */
+
+.otp-box{
+margin:15px 0;
+font-size:18px;
+letter-spacing:3px;
+color:#1b2b7a;
+font-weight:bold;
+}
+
+/* ERROR */
+
+.error{
+color:red;
+font-size:14px;
+margin-top:10px;
+}
+
+</style>
+
 </head>
 
 <body>
 
 <div class="center-box">
 
-    <div class="card">
+<div class="card">
 
-        <!-- ✅ ONLY CHANGE HERE -->
-        <img src="{{ url_for('static', filename='icon.png') }}" class="app-logo">
+<img src="{{ url_for('static', filename='icon.png') }}" class="app-logo">
 
-        <h2>Splitzee</h2>
+<h2>Splitzee</h2>
 
-        <!-- STEP 1: NAME + USERNAME -->
-        {% if step == "name" %}
-            <form method="POST">
-                <input type="hidden" name="action" value="generate_otp">
+{% if step == "name" %}
+<form method="POST">
 
-                <input type="text"
-                       name="display_name"
-                       placeholder="Your name (shown to others)"
-                       required>
+<input type="hidden" name="action" value="generate_otp">
 
-                <input type="text"
-                       name="user_id"
-                       placeholder="Username (unique, no spaces)"
-                       required>
+<input type="text"
+name="display_name"
+placeholder="Your name (shown to others)"
+required>
 
-                <button type="submit">Generate OTP</button>
-            </form>
-        {% endif %}
+<input type="text"
+name="user_id"
+placeholder="Username (unique, no spaces)"
+required>
 
-        <!-- STEP 2: OTP -->
-        {% if step == "otp" %}
-            <p>Hello <b>{{ display_name }}</b></p>
+<button type="submit">Generate OTP</button>
 
-            <div class="otp-box">OTP: {{ otp }}</div>
+</form>
+{% endif %}
 
-            <form method="POST">
-                <input type="hidden" name="action" value="verify_otp">
-                <input type="text" name="otp" placeholder="Enter OTP" required>
-                <button type="submit">Verify & Login</button>
-            </form>
+{% if step == "otp" %}
 
-            {% if error %}
-                <p class="error">{{ error }}</p>
-            {% endif %}
-        {% endif %}
+<p>Hello <b>{{ display_name }}</b></p>
 
-    </div>
+<div class="otp-box">OTP: {{ otp }}</div>
+
+<form method="POST">
+
+<input type="hidden" name="action" value="verify_otp">
+
+<input type="text" name="otp" placeholder="Enter OTP" required>
+
+<button type="submit">Verify & Login</button>
+
+</form>
+
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
+{% endif %}
+
+</div>
 
 </div>
 
