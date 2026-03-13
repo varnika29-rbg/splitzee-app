@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
 import json, random, string, sqlite3
-
+import os
 
 app = Flask(__name__)
 app.secret_key = "splitzee-secret-key"
@@ -481,7 +481,11 @@ def delete_account():
 
 
 # ================= RUN =================
-if __name__ == "__main__":
-    # app.run()  (RENDER)
+# if __name__ == "__main__":
+#     # app.run()  (RENDER)
 
- app.run(host="0.0.0.0", port=5000, debug=True)  #(LOCALHOST)
+#  app.run(host="0.0.0.0", port=5000, debug=True)  #(LOCALHOST)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
