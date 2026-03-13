@@ -1,118 +1,222 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Splitzee | Summary</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Splitzee | Summary</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-        }
+<style>
 
-        body {
-            font-family: Arial, sans-serif;
+html, body {
+margin:0;
+padding:0;
+min-height:100vh;
+}
 
-            background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
-            background-attachment: fixed;
+body{
+font-family:Arial, sans-serif;
 
-            background-color: #2bb6a8;
-        }
+background-image:url("{{ url_for('static', filename='app-bg.jpeg') }}");
+background-repeat:no-repeat;
+background-position:center center;
+background-size:cover;
+background-attachment:fixed;
 
-        /* ✅ ONLY ADDITION FOR CENTERING */
-        .center-box {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;   /* horizontal center */
-            align-items: flex-start;   /* allow vertical scroll */
-            padding-top: 60px;
-            padding-bottom: 40px;
-        }
+background-color:#2bb6a8;
+}
 
-        .card {
-            background: white;
-            max-width: 420px;
-            width: 100%;
-            padding: 20px;
-            border-radius: 22px;
-        }
+/* CENTER LAYOUT */
 
-        h2 {
-            text-align: center;
-            color: #1b2b7a;
-        }
+.center-box{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+padding-top:60px;
+padding-bottom:40px;
+}
 
-        .row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            font-size: 14px;
-        }
+/* MAIN CARD */
 
-        hr { margin: 14px 0; }
+.card{
+background:white;
+max-width:420px;
+width:100%;
+padding:22px;
+border-radius:22px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
 
-        a {
-            display: block;
-            margin-top: 10px;
-            padding: 12px;
-            text-align: center;
-            background: #2bb6a8;
-            color: white;
-            border-radius: 20px;
-            text-decoration: none;
-        }
+/* TITLE */
 
-        .gray {
-            background: #ccc;
-            color: #333;
-        }
-    </style>
+h2{
+text-align:center;
+color:#1b2b7a;
+margin-bottom:15px;
+}
+
+/* TOTAL EXPENSE BOX */
+
+.total-box{
+text-align:center;
+background:#f1f8f7;
+padding:14px;
+border-radius:12px;
+margin-bottom:15px;
+font-size:14px;
+}
+
+.total-box span{
+font-size:22px;
+font-weight:bold;
+color:#2bb6a8;
+}
+
+/* INFO ROWS */
+
+.row{
+display:flex;
+justify-content:space-between;
+padding:6px 0;
+font-size:14px;
+}
+
+/* SETTLEMENT CARDS */
+
+.settlement{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#f7f7f7;
+padding:12px 14px;
+border-radius:12px;
+margin:8px 0;
+font-size:14px;
+}
+
+.payer{
+font-weight:bold;
+color:#c62828;
+}
+
+.receiver{
+font-weight:bold;
+color:#2e7d32;
+}
+
+.arrow{
+color:#555;
+margin:0 6px;
+}
+
+.amount{
+font-weight:bold;
+color:#1b2b7a;
+}
+
+/* BUTTONS */
+
+a{
+display:block;
+margin-top:10px;
+padding:12px;
+text-align:center;
+background:#2bb6a8;
+color:white;
+border-radius:20px;
+text-decoration:none;
+font-size:14px;
+}
+
+.gray{
+background:#ccc;
+color:#333;
+}
+
+/* EMPTY TEXT */
+
+.empty{
+text-align:center;
+font-size:14px;
+color:#777;
+margin-top:10px;
+}
+
+</style>
 </head>
 
 <body>
 
 <div class="center-box">
 
-    <div class="card">
-        <h2>{{ group_name }}</h2>
+<div class="card">
 
-        <div class="row"><b>Total Expense</b><b>₹{{ total }}</b></div>
+<h2>{{ group_name }}</h2>
 
-        {% if top_payer %}
-            <div class="row">Paid most: {{ top_payer }} (₹{{ top_paid }})</div>
-        {% endif %}
+<!-- TOTAL EXPENSE -->
 
-        {% if top_ower %}
-            <div class="row">Owes most: {{ top_ower }} (₹{{ top_owed }})</div>
-        {% endif %}
+<div class="total-box">
+Total Expense<br>
+<span>₹{{ total }}</span>
+</div>
 
-        <hr>
+{% if top_payer %}
+<div class="row">
+<span>Paid most</span>
+<span>{{ top_payer }} (₹{{ top_paid }})</span>
+</div>
+{% endif %}
 
-        {% if settlements %}
-            {% for owe,get,amt in settlements %}
-                <div class="row">
-                    <span>{{ owe }} → {{ get }}</span>
-                    <span>₹{{ amt }}</span>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p style="text-align:center;">All settled 🎉</p>
-        {% endif %}
+{% if top_ower %}
+<div class="row">
+<span>Owes most</span>
+<span>{{ top_ower }} (₹{{ top_owed }})</span>
+</div>
+{% endif %}
 
-        {% if not settled %}
-            <a href="/group/{{ group_code }}/mark-settled">✅ Mark as Settled</a>
-        {% endif %}
+<hr>
 
-        <a href="/profile">👤 My Profile</a>
-        <a href="/group/{{ group_code }}" class="gray">⬅ Back</a>
-        <a href="/groups" class="gray">Groups</a>
-    </div>
+<!-- SETTLEMENT LIST -->
+
+{% if settlements %}
+
+{% for owe,get,amt in settlements %}
+
+<div class="settlement">
+
+<div>
+<span class="payer">{{ owe }}</span>
+<span class="arrow">pays</span>
+<span class="receiver">{{ get }}</span>
+</div>
+
+<div class="amount">₹{{ amt }}</div>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<p class="empty">All settled 🎉</p>
+
+{% endif %}
+
+<!-- ACTION BUTTONS -->
+
+{% if not settled %}
+<a href="/group/{{ group_code }}/mark-settled">✅ Mark as Settled</a>
+{% endif %}
+
+<a href="/profile">👤 My Profile</a>
+
+<a href="/group/{{ group_code }}" class="gray">⬅ Back</a>
+
+<a href="/groups" class="gray">Groups</a>
+
+</div>
 
 </div>
 
 </body>
 </html>
+

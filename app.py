@@ -34,7 +34,7 @@ def init_db():
 
 
 def load_data():
-    init_db()  # 👈 ALWAYS ensure table exists
+    init_db()  
 
     conn = sqlite3.connect("splitzee.db")
     cursor = conn.cursor()
@@ -284,6 +284,9 @@ def add_expense(code):
     normalize_data(data)
     group = get_group(data, code)
 
+    if not group:
+        return "Group not found"
+
     if request.method == "POST":
         group["expenses"].append({
             "expense_id": str(random.randint(10000, 99999)),
@@ -292,6 +295,7 @@ def add_expense(code):
             "paid_by": request.form["paid_by"],
             "split_among": request.form.getlist("split_among")
         })
+
         save_data(data)
         return redirect(f"/group/{code}")
 
@@ -366,6 +370,7 @@ def edit_expense(group_code, expense_id):
 
 # ================= SUMMARY =================
 
+
 @app.route("/group/<code>/settle")
 def group_settle(code):
     if "user_id" not in session:
@@ -375,15 +380,25 @@ def group_settle(code):
     normalize_data(data)
     group = get_group(data, code)
 
+    if not group:
+        return "Group not found"
 
     balances = calculate_balances(group)
     settlements = settle_up(balances)
+
+    # convert user_id → display name
+    name_map = {m["id"]: m["name"] for m in group["members"]}
+
+    settlements_named = [
+        (name_map.get(o, o), name_map.get(g, g), a)
+        for o, g, a in settlements
+    ]
 
     return render_template(
         "group_settle.html",
         group_name=group["name"],
         group_code=code,
-        settlements=settlements,
+        settlements=settlements_named,
         total=total_expense(group),
         settled=group["settled"]
     )
