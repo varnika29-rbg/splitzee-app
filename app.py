@@ -258,6 +258,13 @@ def group_dashboard(code):
     if not any(m["id"] == session["user_id"] for m in group["members"]):
         return "Unauthorized"
 
+    # create id -> name map
+    name_map = {m["id"]: m["name"] for m in group["members"]}
+
+    # attach display name to each expense
+    for e in group["expenses"]:
+        e["paid_by_name"] = name_map.get(e["paid_by"], e["paid_by"])
+
     return render_template(
         "group_dashboard.html",
         group_name=group["name"],
