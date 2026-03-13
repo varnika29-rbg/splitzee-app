@@ -122,8 +122,17 @@ def total_expense(group):
 
 # ================= AUTH =================
 
-@app.route("/", methods=["GET", "POST"])
+
+
+@app.route("/")
+def home():
+    return render_template("home.html")
+
+
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
+
     if request.method == "POST":
         action = request.form.get("action")
 

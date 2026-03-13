@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Splitzee</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#f8f9fb;
+}
+
+/* NAVBAR */
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 40px;
+background:white;
+box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+color:#2bb6a8;
+}
+
+.nav-links a{
+margin-left:20px;
+text-decoration:none;
+color:#333;
+font-size:14px;
+}
+
+.login-btn{
+background:#2bb6a8;
+color:white;
+padding:10px 18px;
+border-radius:20px;
+text-decoration:none;
+}
+
+/* HERO SECTION */
+
+.hero{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:80px 60px;
+flex-wrap:wrap;
+}
+
+.hero-text{
+max-width:500px;
+}
+
+.hero-text h1{
+font-size:42px;
+margin-bottom:15px;
+}
+
+.hero-text span{
+color:#2bb6a8;
+}
+
+.hero-text p{
+color:#555;
+font-size:16px;
+line-height:1.6;
+}
+
+.hero-btn{
+margin-top:20px;
+display:inline-block;
+background:#2bb6a8;
+color:white;
+padding:12px 26px;
+border-radius:25px;
+text-decoration:none;
+}
+
+.hero img{
+width:420px;
+max-width:100%;
+}
+
+/* FEATURES */
+
+.features{
+background:white;
+padding:70px 40px;
+text-align:center;
+}
+
+.features h2{
+margin-bottom:30px;
+}
+
+.feature-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+}
+
+.feature{
+background:#f7f7f7;
+padding:25px;
+border-radius:15px;
+}
+
+.feature h3{
+color:#1b2b7a;
+}
+
+/* HOW IT WORKS */
+
+.steps{
+padding:70px 40px;
+text-align:center;
+}
+
+.step-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:25px;
+margin-top:30px;
+}
+
+.step{
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 6px 20px rgba(0,0,0,0.1);
+}
+
+/* FOOTER */
+
+.footer{
+text-align:center;
+padding:30px;
+background:#eee;
+margin-top:40px;
+font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="logo">Splitzee</div>
+
+<div class="nav-links">
+<a href="#features">Features</a>
+<a href="#how">How it works</a>
+<a href="/login" class="login-btn">Login</a>
+</div>
+
+</div>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-text">
+
+<h1>Split Expenses <span>Smartly</span></h1>
+
+<p>
+Track group expenses after trips, dinners, or shared living.
+Splitzee automatically calculates who owes whom.
+</p>
+
+<a href="/login" class="hero-btn">Start Splitting</a>
+
+</div>
+
+<img src="{{ url_for('static', filename='split.png') }}">
+
+</section>
+
+<!-- FEATURES -->
+
+<section id="features" class="features">
+
+<h2>Features</h2>
+
+<div class="feature-grid">
+
+<div class="feature">
+<h3>Easy Expense Tracking</h3>
+<p>Add expenses in seconds.</p>
+</div>
+
+<div class="feature">
+<h3>Automatic Settlement</h3>
+<p>Instantly see who owes whom.</p>
+</div>
+
+<div class="feature">
+<h3>Group Based</h3>
+<p>Create groups for trips or roommates.</p>
+</div>
+
+<div class="feature">
+<h3>History</h3>
+<p>View past trips and settlements.</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- HOW IT WORKS -->
+
+<section id="how" class="steps">
+
+<h2>How Splitzee Works</h2>
+
+<div class="step-grid">
+
+<div class="step">
+<h3>1. Create Group</h3>
+<p>Create a group for your trip or event.</p>
+</div>
+
+<div class="step">
+<h3>2. Add Expenses</h3>
+<p>Record who paid and how to split.</p>
+</div>
+
+<div class="step">
+<h3>3. Settle Up</h3>
+<p>Splitzee calculates payments automatically.</p>
+</div>
+
+</div>
+
+</section>
+
+<div class="footer">
+© Splitzee – Smart Expense Sharing
+</div>
+
+</body>
+</html>
+
