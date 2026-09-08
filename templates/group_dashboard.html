@@ -5,260 +5,822 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        * { box-sizing: border-box; }
+    * {
+        box-sizing: border-box;
+    }
 
-        html, body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+    html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100%;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        background-attachment: fixed;
+        background-color: #2bb6a8;
+        color: #333;
+    }
+
+    /* ================= MAIN LAYOUT ================= */
+
+    .page-wrapper {
+        min-height: 100vh;
+        padding: 30px 15px 40px;
+    }
+
+    .dashboard {
+        width: 100%;
+        max-width: 720px;
+        margin: auto;
+    }
+
+    /* ================= HEADER ================= */
+
+    .top-bar {
+        background: rgba(255, 255, 255, 0.96);
+        border-radius: 22px;
+        padding: 18px 22px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .brand {
+        font-size: 24px;
+        font-weight: bold;
+        color: #1b2b7a;
+        letter-spacing: 0.5px;
+    }
+
+    .brand span {
+        color: #2bb6a8;
+    }
+
+    .profile-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #e7f7f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 21px;
+    }
+
+    /* ================= GROUP HEADER ================= */
+
+    .group-header {
+        background: white;
+        border-radius: 25px;
+        padding: 24px 20px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    }
+
+    .group-icon {
+        width: 62px;
+        height: 62px;
+        border-radius: 20px;
+        background: #e7f7f5;
+        margin: 0 auto 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+    }
+
+    .group-header h2 {
+        margin: 0;
+        color: #1b2b7a;
+        font-size: 25px;
+    }
+
+    .group-code {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+        padding: 8px 15px;
+        border-radius: 20px;
+        background: #e7f7f5;
+        color: #238f84;
+        font-weight: bold;
+        letter-spacing: 3px;
+        font-size: 14px;
+    }
+
+    .copy-code {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        font-size: 15px;
+        padding: 0;
+    }
+
+    /* ================= STATS ================= */
+
+    .stats {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 12px;
+        margin-top: 15px;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 18px;
+        padding: 17px 12px;
+        box-shadow: 0 8px 22px rgba(0,0,0,0.13);
+        text-align: center;
+    }
+
+    .stat-icon {
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+
+    .stat-label {
+        font-size: 12px;
+        color: #777;
+        margin-bottom: 5px;
+    }
+
+    .stat-value {
+        font-size: 18px;
+        font-weight: bold;
+        color: #1b2b7a;
+    }
+
+    /* ================= SECTION ================= */
+
+    .section {
+        margin-top: 18px;
+        background: white;
+        border-radius: 22px;
+        padding: 20px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.14);
+    }
+
+    .section-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #1b2b7a;
+    }
+
+    .section-count {
+        font-size: 12px;
+        color: #777;
+    }
+
+    /* ================= MEMBERS ================= */
+
+    .members {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 5px;
+    }
+
+    .member {
+        background: #f1f8f7;
+        border-radius: 20px;
+        padding: 8px 12px;
+        font-size: 13px;
+        color: #333;
+    }
+
+    /* ================= EXPENSE ================= */
+
+    .expense {
+        padding: 15px 0;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    .expense:last-child {
+        border-bottom: none;
+        padding-bottom: 3px;
+    }
+
+    .expense-main {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .expense-icon {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        border-radius: 14px;
+        background: #e7f7f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 21px;
+    }
+
+    .expense-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .expense-title {
+        font-weight: bold;
+        color: #333;
+        font-size: 15px;
+        line-height: 1.4;
+    }
+
+    .expense-meta {
+        font-size: 12px;
+        color: #777;
+        margin-top: 4px;
+    }
+
+    .expense-amount {
+        font-size: 16px;
+        font-weight: bold;
+        color: #1b2b7a;
+        white-space: nowrap;
+    }
+
+    .per-person {
+        margin-top: 7px;
+        font-size: 12px;
+        color: #2e7d32;
+        background: #eef8ef;
+        display: inline-block;
+        padding: 5px 9px;
+        border-radius: 12px;
+    }
+
+    .expense-actions {
+        margin-top: 9px;
+        margin-left: 56px;
+    }
+
+    .expense-actions a {
+        font-size: 12px;
+        margin-right: 14px;
+        text-decoration: none;
+        color: #2f6db3;
+    }
+
+    .expense-actions a.delete {
+        color: #c62828;
+    }
+
+    .empty {
+        text-align: center;
+        font-size: 14px;
+        color: #888;
+        padding: 25px 0;
+    }
+
+    /* ================= ACTION BUTTONS ================= */
+
+    .actions {
+        margin-top: 18px;
+    }
+
+    .btn {
+        display: flex;
+        width: 100%;
+        min-height: 48px;
+        padding: 13px 16px;
+        margin-top: 10px;
+        border-radius: 25px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        background: #2bb6a8;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(43,182,168,0.3);
+    }
+
+    .btn.secondary {
+        background: #eeeeee;
+        color: #333;
+    }
+
+    /* ================= MODAL ================= */
+
+    .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.55);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 20px;
+    }
+
+    .modal-box {
+        background: white;
+        width: 100%;
+        max-width: 360px;
+        padding: 22px;
+        border-radius: 22px;
+        text-align: center;
+        animation: pop 0.2s ease-out;
+    }
+
+    @keyframes pop {
+        from {
+            transform: scale(0.9);
+            opacity: 0;
         }
 
-        body {
-            font-family: Arial, sans-serif;
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
 
-            background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
-            background-attachment: fixed;
+    .modal-box h3 {
+        margin: 0;
+        color: #1b2b7a;
+    }
 
-            background-color: #2bb6a8;
+    .modal-box p {
+        font-size: 14px;
+        color: #555;
+        margin: 12px 0 18px;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .modal-actions .btn {
+        flex: 1;
+    }
+
+    .btn.danger {
+        background: #c62828;
+        color: white;
+    }
+
+    /* ================= TOAST ================= */
+
+    .toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        max-width: 330px;
+        background: #1b2b7a;
+        color: white;
+        padding: 13px 17px;
+        border-radius: 13px;
+        font-size: 13px;
+        box-shadow: 0 5px 18px rgba(0,0,0,0.25);
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.4s ease;
+        z-index: 9999;
+    }
+
+    .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 600px) {
+
+        .page-wrapper {
+            padding: 12px 10px 25px;
         }
 
-        /* ✅ ONLY ADDITION FOR CENTERING */
-        .center-box {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;   /* horizontal center */
-            align-items: flex-start;   /* allow vertical scroll */
-            padding-top: 60px;
-            padding-bottom: 40px;
+        .top-bar {
+            padding: 14px 16px;
+            border-radius: 18px;
         }
 
-        .card {
-            background: white;
-            max-width: 420px;
-            width: 100%;
-            padding: 20px;
-            border-radius: 22px;
-            box-shadow: 0 10px 30px rgba(0,0,0,.2);
+        .brand {
+            font-size: 21px;
         }
 
-        h2 {
-            margin: 0;
-            color: #1b2b7a;
-            text-align: center;
+        .group-header {
+            padding: 20px 15px;
+            border-radius: 20px;
         }
 
-        .code {
-            text-align: center;
-            font-weight: bold;
-            letter-spacing: 3px;
-            margin: 8px 0 14px;
-            color: #2bb6a8;
+        .group-header h2 {
+            font-size: 22px;
+        }
+
+        .stats {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .stat-card:first-child {
+            grid-column: 1 / -1;
         }
 
         .section {
-            margin-top: 20px;
+            padding: 16px;
+            border-radius: 19px;
         }
 
-        .section-title {
-            font-size: 16px;
-            color: #1b2b7a;
-            margin-bottom: 8px;
+        .expense-main {
+            gap: 9px;
         }
 
-        .member {
-            font-size: 14px;
-            padding: 4px 0;
+        .expense-icon {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
         }
-
-        .expense {
-            padding: 12px 8px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .expense:last-child { border-bottom: none; }
 
         .expense-title {
-            font-weight: bold;
-            color: #333;
+            font-size: 14px;
         }
 
-        .expense-meta {
-            font-size: 13px;
-            color: #555;
-            margin-top: 4px;
-        }
-
-        .per-person {
-            font-size: 13px;
-            color: #2e7d32;
-            margin-top: 3px;
+        .expense-amount {
+            font-size: 14px;
         }
 
         .expense-actions {
-            margin-top: 6px;
+            margin-left: 49px;
         }
 
-        .expense-actions a {
-            font-size: 13px;
-            margin-right: 12px;
-            text-decoration: none;
-            color: #2f6db3;
-        }
-
-        .expense-actions a.delete {
-            color: #c62828;
-        }
-
-        .empty {
+        .toast {
+            left: 12px;
+            right: 12px;
+            top: 12px;
+            max-width: none;
             text-align: center;
-            font-size: 14px;
-            color: #777;
-            margin: 12px 0;
         }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 13px;
-            margin-top: 12px;
-            border-radius: 25px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 14px;
-            background: #2bb6a8;
-            color: white;
-        }
-
-        .btn.secondary {
-            background: #ccc;
-            color: #333;
-        }
-
-        /* ---------- CUSTOM MODAL ---------- */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .modal-box {
-            background: white;
-            width: 90%;
-            max-width: 360px;
-            padding: 20px;
-            border-radius: 20px;
-            text-align: center;
-            animation: pop 0.2s ease-out;
-        }
-
-        @keyframes pop {
-            from { transform: scale(0.9); opacity: 0; }
-            to   { transform: scale(1); opacity: 1; }
-        }
-
-        .modal-box h3 {
-            margin: 0;
-            color: #1b2b7a;
-        }
-
-        .modal-box p {
-            font-size: 14px;
-            color: #555;
-            margin: 12px 0 18px;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .modal-actions .btn {
-            flex: 1;
-        }
-
-        .btn.danger {
-            background: #c62828;
-            color: white;
-        }
-    </style>
+    }
+</style>
 </head>
 
 <body>
 
-<div class="center-box">
+<div class="page-wrapper">
 
-    <div class="card">
+    <div class="dashboard">
 
-        <h2>{{ group_name }}</h2>
-        <div class="code">{{ group_code }}</div>
+        <!-- TOP BAR -->
+        <div class="top-bar">
+
+            <div class="brand">
+                Split<span>zee</span>
+            </div>
+
+            <a href="/profile" class="profile-icon" style="text-decoration:none;">
+                👤
+            </a>
+
+        </div>
+
+
+        <!-- GROUP HEADER -->
+        <div class="group-header">
+
+            <div class="group-icon">
+                ✈️
+            </div>
+
+            <h2>{{ group_name }}</h2>
+
+            <div class="group-code">
+
+                {{ group_code }}
+
+                <button
+                    class="copy-code"
+                    onclick="copyGroupCode()"
+                    title="Copy group code">
+                    📋
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATS -->
+        <div class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    💰
+                </div>
+
+                <div class="stat-label">
+                    Total Expense
+                </div>
+
+                <div class="stat-value">
+                    ₹{{ "%.2f"|format(expenses|sum(attribute='amount')) }}
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    👥
+                </div>
+
+                <div class="stat-label">
+                    Members
+                </div>
+
+                <div class="stat-value">
+                    {{ members|length }}
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🧾
+                </div>
+
+                <div class="stat-label">
+                    Expenses
+                </div>
+
+                <div class="stat-value">
+                    {{ expenses|length }}
+                </div>
+
+            </div>
+
+        </div>
+
 
         <!-- MEMBERS -->
         <div class="section">
-            <div class="section-title">Members</div>
-            {% for m in members %}
-                <div class="member">• {{ m.name }}</div>
-            {% endfor %}
+
+            <div class="section-heading">
+
+                <div class="section-title">
+                    👥 Members
+                </div>
+
+                <div class="section-count">
+                    {{ members|length }} people
+                </div>
+
+            </div>
+
+
+            <div class="members">
+
+                {% for member in members %}
+
+                    <div class="member">
+                        👤 {{ member.name }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
         </div>
+
 
         <!-- EXPENSES -->
         <div class="section">
-            <div class="section-title">Expenses</div>
+
+            <div class="section-heading">
+
+                <div class="section-title">
+                    🧾 Recent Expenses
+                </div>
+
+                <div class="section-count">
+                    {{ expenses|length }} total
+                </div>
+
+            </div>
+
 
             {% if expenses %}
+
                 {% for e in expenses %}
+
                     {% set share = e.amount / (e.split_among | length) %}
+
+
                     <div class="expense">
 
-                        <div class="expense-title">
-                            {{ e.paid_by_name }} paid ₹{{ e.amount }} for {{ e.title }}
+                        <div class="expense-main">
+
+                            <!-- EXPENSE ICON -->
+                            <div class="expense-icon">
+                                💰
+                            </div>
+
+
+                            <!-- EXPENSE INFORMATION -->
+                            <div class="expense-info">
+
+                                <div class="expense-title">
+                                    {{ e.title }}
+                                </div>
+
+
+                                <div class="expense-meta">
+                                    Paid by {{ e.paid_by_name }}
+                                    · Split among
+                                    {{ e.split_among | length }}
+                                    people
+                                </div>
+
+
+                                <div class="per-person">
+                                    → ₹{{ "%.2f"|format(share) }}
+                                    per person
+                                </div>
+
+                            </div>
+
+
+                            <!-- AMOUNT -->
+                            <div class="expense-amount">
+                                ₹{{ "%.2f"|format(e.amount) }}
+                            </div>
+
                         </div>
 
-                        <div class="expense-meta">
-                            Split among {{ e.split_among | length }} people
-                        </div>
 
-                        <div class="per-person">
-                            → Per person pays ₹{{ "%.2f"|format(share) }}
-                        </div>
-
+                        <!-- EXPENSE ACTIONS -->
                         <div class="expense-actions">
-                            <a href="/edit-expense/{{ group_code }}/{{ e.expense_id }}">✏️ Edit</a>
 
-                            <a href="javascript:void(0)"
-                               class="delete"
-                               onclick="openConfirm(
-                                 'Delete Expense',
-                                 'This expense will be permanently removed.',
-                                 () => window.location.href='/delete-expense/{{ group_code }}/{{ e.expense_id }}'
-                               )">
-                               🗑 Delete
+                            <a
+                                href="/edit-expense/{{ group_code }}/{{ e.expense_id }}">
+                                ✏️ Edit
                             </a>
+
+
+                            <a
+                                href="javascript:void(0)"
+                                class="delete"
+                                onclick="openConfirm(
+                                    'Delete Expense',
+                                    'This expense will be permanently removed.',
+                                    () => window.location.href='/delete-expense/{{ group_code }}/{{ e.expense_id }}'
+                                )">
+
+                                🗑 Delete
+
+                            </a>
+
                         </div>
 
                     </div>
+
                 {% endfor %}
+
+
             {% else %}
-                <div class="empty">No expenses added yet</div>
+
+                <div class="empty">
+
+                    <div style="font-size:35px; margin-bottom:8px;">
+                        🧾
+                    </div>
+
+                    No expenses added yet.
+
+                    <br>
+
+                    Add your first expense below!
+
+                </div>
+
             {% endif %}
+
         </div>
 
-        <a class="btn" href="/add-expense/{{ group_code }}">➕ Add Expense</a>
-        <a class="btn" href="/group/{{ group_code }}/settle">💸 View Summary</a>
-        <a class="btn" href="/profile">👤 My Profile</a>
-        <a class="btn secondary" href="/groups">⬅ Back</a>
+
+        <!-- ACTION BUTTONS -->
+        <div class="actions">
+
+            <a
+                class="btn"
+                href="/add-expense/{{ group_code }}">
+                ➕ Add Expense
+            </a>
+
+
+            <a
+                class="btn"
+                href="/group/{{ group_code }}/settle">
+                💸 View Summary
+            </a>
+
+
+            <a
+                class="btn"
+                href="/profile">
+                👤 My Profile
+            </a>
+
+
+            <a
+                class="btn secondary"
+                href="/groups">
+                ⬅ Back to Groups
+            </a>
+
+        </div>
 
     </div>
 
 </div>
 
-<!-- CONFIRM MODAL -->
+
+<!-- COPY GROUP CODE -->
+<script>
+
+function copyGroupCode() {
+
+    const code = "{{ group_code }}";
+
+    if (navigator.clipboard && window.isSecureContext) {
+
+        navigator.clipboard.writeText(code).then(function() {
+            showCopySuccess();
+        });
+
+    } else {
+
+        const textArea = document.createElement("textarea");
+
+        textArea.value = code;
+
+        textArea.style.position = "fixed";
+        textArea.style.left = "-9999px";
+
+        document.body.appendChild(textArea);
+
+        textArea.select();
+
+        try {
+            document.execCommand("copy");
+            showCopySuccess();
+        } catch (err) {
+            console.log("Copy failed");
+        }
+
+        document.body.removeChild(textArea);
+    }
+}
+
+
+function showCopySuccess() {
+
+    const button = document.querySelector(".copy-code");
+
+    if (!button) return;
+
+    button.innerText = "✓";
+
+    setTimeout(function() {
+        button.innerText = "📋";
+    }, 1500);
+
+}
+
+</script>
+
 <div id="confirmModal" class="modal">
   <div class="modal-box">
     <h3 id="modalTitle">Are you sure?</h3>
@@ -292,5 +854,29 @@ document.getElementById("modalConfirmBtn").onclick = function () {
 };
 </script>
 
+{% if latest_activity %}
+<div id="toast" class="toast">
+🔔 {{ latest_activity }}
+</div>
+{% endif %}
+
+{% if latest_activity %}
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const toast = document.getElementById("toast");
+
+    if(toast){
+        toast.classList.add("show");
+
+        setTimeout(function(){
+            toast.classList.remove("show");
+        },3000);
+    }
+
+});
+</script>
+{% endif %}
 </body>
 </html>
+>
