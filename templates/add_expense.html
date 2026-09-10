@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <title>Splitzee | Add Expense</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+
         * {
             box-sizing: border-box;
         }
 
-        html, body {
+        html,
+        body {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            min-height: 100%;
         }
 
         body {
@@ -25,149 +29,673 @@
             background-attachment: fixed;
 
             background-color: #2bb6a8;
+            color: #333;
         }
 
-        /* ✅ ONLY ADDITION FOR CENTERING */
-        .center-box {
+
+        /* ================= PAGE ================= */
+
+        .page-wrapper {
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 30px 15px 40px;
         }
 
-        .card {
-            background: white;
-            max-width: 420px;
+        .expense-container {
             width: 100%;
-            padding: 24px;
-            border-radius: 22px;
-            box-shadow: 0 10px 30px rgba(0,0,0,.2);
+            max-width: 560px;
+            margin: auto;
         }
 
-        h2 {
-            text-align: center;
+
+        /* ================= TOP BAR ================= */
+
+        .top-bar {
+            background: rgba(255,255,255,0.96);
+            border-radius: 22px;
+            padding: 17px 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+
+            margin-bottom: 16px;
+        }
+
+        .brand {
+            font-size: 23px;
+            font-weight: bold;
             color: #1b2b7a;
-            margin-top: 0;
-            margin-bottom: 20px;
+        }
+
+        .brand span {
+            color: #2bb6a8;
+        }
+
+        .back-top {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+
+            background: #e7f7f5;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+
+            font-size: 19px;
+        }
+
+
+        /* ================= MAIN CARD ================= */
+
+        .expense-card {
+            background: white;
+
+            border-radius: 25px;
+
+            padding: 25px 22px;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .expense-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .expense-icon {
+            width: 64px;
+            height: 64px;
+
+            border-radius: 20px;
+
+            background: #e7f7f5;
+
+            margin: 0 auto 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+        }
+
+        .expense-header h2 {
+            margin: 0;
+
+            color: #1b2b7a;
+
+            font-size: 25px;
+        }
+
+        .expense-subtitle {
+            margin-top: 6px;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-top: 18px;
+        }
+
+        .form-label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #333;
+
+            margin-bottom: 7px;
         }
 
         input[type="text"],
         input[type="number"] {
             width: 100%;
-            padding: 13px;
-            border-radius: 14px;
-            border: 1px solid #ccc;
-            margin-bottom: 16px;
+
+            padding: 13px 14px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 13px;
+
+            background: #fafafa;
+
+            color: #333;
+
             font-size: 14px;
+
+            outline: none;
+
+            transition: border 0.2s ease,
+                        box-shadow 0.2s ease,
+                        background 0.2s ease;
         }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #2bb6a8;
+
+            background: white;
+
+            box-shadow: 0 0 0 3px rgba(43,182,168,0.12);
+        }
+
+
+        /* ================= AMOUNT ================= */
+
+        .amount-wrapper {
+            position: relative;
+        }
+
+        .currency {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-weight: bold;
+
+            color: #2bb6a8;
+
+            pointer-events: none;
+        }
+
+        .amount-wrapper input {
+            padding-left: 34px;
+        }
+
+
+        /* ================= SECTION ================= */
 
         .section-title {
-            margin: 16px 0 8px;
+            margin-top: 24px;
+            margin-bottom: 9px;
+
+            font-size: 14px;
+
             font-weight: bold;
+
             color: #1b2b7a;
-            font-size: 14px;
         }
 
-        .option {
+        .section-help {
+            font-size: 12px;
+
+            color: #888;
+
+            margin-top: -4px;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* ================= MEMBER OPTIONS ================= */
+
+        .member-list {
             display: flex;
-            justify-content: space-between;
+
+            flex-direction: column;
+
+            gap: 9px;
+        }
+
+        .member-option {
+            position: relative;
+        }
+
+        .member-option input {
+            position: absolute;
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+        .member-label {
+            display: flex;
+
             align-items: center;
-            padding: 10px 6px;
-            font-size: 15px;
-            border-bottom: 1px solid #eee;
-        }
 
-        .option:last-child {
-            border-bottom: none;
-        }
+            gap: 11px;
 
-        .option span {
-            color: #333;
-        }
+            padding: 12px 13px;
 
-        .option input {
-            transform: scale(1.2);
+            border-radius: 14px;
+
+            background: #f5f9f8;
+
+            border: 1px solid #e5eeee;
+
             cursor: pointer;
+
+            transition: all 0.2s ease;
         }
 
-        button {
-            width: 100%;
-            padding: 14px;
-            border-radius: 25px;
-            border: none;
-            background: #2bb6a8;
-            color: white;
-            font-size: 15px;
-            margin-top: 20px;
-            cursor: pointer;
+        .member-label:hover {
+            border-color: #2bb6a8;
+
+            transform: translateY(-1px);
         }
 
-        .back {
-            display: block;
-            margin-top: 12px;
-            text-align: center;
-            text-decoration: none;
-            color: #1b2b7a;
+        .member-avatar {
+            width: 36px;
+            height: 36px;
+
+            min-width: 36px;
+
+            border-radius: 50%;
+
+            background: #e7f7f5;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+        }
+
+        .member-name {
+            flex: 1;
+
             font-size: 14px;
+
+            font-weight: 500;
         }
+
+        .selection-icon {
+            width: 22px;
+            height: 22px;
+
+            border-radius: 50%;
+
+            border: 2px solid #cbd8d6;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 12px;
+
+            color: transparent;
+        }
+
+
+        /* RADIO */
+
+        .member-option input[type="radio"]:checked + .member-label {
+            background: #e7f7f5;
+
+            border-color: #2bb6a8;
+        }
+
+        .member-option input[type="radio"]:checked + .member-label .selection-icon {
+            background: #2bb6a8;
+
+            border-color: #2bb6a8;
+
+            color: white;
+        }
+
+
+        /* CHECKBOX */
+
+        .member-option input[type="checkbox"]:checked + .member-label {
+            background: #e7f7f5;
+
+            border-color: #2bb6a8;
+        }
+
+        .member-option input[type="checkbox"]:checked + .member-label .selection-icon {
+            background: #2bb6a8;
+
+            border-color: #2bb6a8;
+
+            color: white;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .form-actions {
+            margin-top: 25px;
+        }
+
+        .add-btn {
+            width: 100%;
+
+            min-height: 50px;
+
+            border: none;
+
+            border-radius: 26px;
+
+            background: #2bb6a8;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: transform 0.15s ease,
+                        box-shadow 0.15s ease;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow: 0 6px 18px rgba(43,182,168,0.3);
+        }
+
+        .cancel-btn {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+
+            min-height: 48px;
+
+            margin-top: 10px;
+
+            border-radius: 25px;
+
+            background: #eeeeee;
+
+            color: #333;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 600px) {
+
+            .page-wrapper {
+                padding: 12px 10px 25px;
+            }
+
+            .top-bar {
+                padding: 14px 16px;
+
+                border-radius: 18px;
+            }
+
+            .brand {
+                font-size: 21px;
+            }
+
+            .expense-card {
+                padding: 22px 16px;
+
+                border-radius: 20px;
+            }
+
+            .expense-header h2 {
+                font-size: 22px;
+            }
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-<div class="center-box">
+<div class="page-wrapper">
 
-    <div class="card">
+    <div class="expense-container">
 
-        <h2>Add Expense</h2>
 
-        <form method="POST">
+        <!-- TOP BAR -->
 
-            <input
-                type="text"
-                name="title"
-                placeholder="Expense title (Food, Travel, Hotel)"
-                required
-            >
+        <div class="top-bar">
 
-            <input
-                type="number"
-                step="0.01"
-                name="amount"
-                placeholder="Total amount"
-                required
-            >
+            <div class="brand">
+                Split<span>zee</span>
+            </div>
 
-            <div class="section-title">Paid by</div>
-            {% for m in members %}
-                <div class="option">
-                    <span>{{ m.name }}</span>
-                    <input
-                        type="radio"
-                        name="paid_by"
-                        value="{{ m.id }}"
-                        required
-                    >
+            <a
+                href="/group/{{ group_code }}"
+                class="back-top"
+                title="Back to group">
+                ←
+            </a>
+
+        </div>
+
+
+        <!-- MAIN CARD -->
+
+        <div class="expense-card">
+
+
+            <!-- HEADER -->
+
+            <div class="expense-header">
+
+                <div class="expense-icon">
+                    💸
                 </div>
-            {% endfor %}
 
-            <div class="section-title">Split among</div>
-            {% for m in members %}
-                <div class="option">
-                    <span>{{ m.name }}</span>
-                    <input
-                        type="checkbox"
-                        name="split_among"
-                        value="{{ m.id }}"
-                        checked
-                    >
+                <h2>
+                    Add Expense
+                </h2>
+
+                <div class="expense-subtitle">
+                    Add a new expense to your group
                 </div>
-            {% endfor %}
 
-            <button type="submit">Add Expense</button>
-        </form>
+            </div>
 
-        <a class="back" href="/group/{{ group_code }}">⬅ Back to Dashboard</a>
+
+            <!-- FORM -->
+
+            <form method="POST">
+
+
+                <!-- TITLE -->
+
+                <div class="form-group">
+
+                    <label
+                        class="form-label"
+                        for="title">
+
+                        Expense Title
+
+                    </label>
+
+                    <input
+                        id="title"
+                        type="text"
+                        name="title"
+                        placeholder="e.g. Food, Travel, Hotel"
+                        required>
+
+                </div>
+
+
+                <!-- AMOUNT -->
+
+                <div class="form-group">
+
+                    <label
+                        class="form-label"
+                        for="amount">
+
+                        Total Amount
+
+                    </label>
+
+                    <div class="amount-wrapper">
+
+                        <span class="currency">
+                            ₹
+                        </span>
+
+                        <input
+                            id="amount"
+                            type="number"
+                            step="0.01"
+                            name="amount"
+                            placeholder="0.00"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PAID BY -->
+
+                <div class="section-title">
+                    Paid By
+                </div>
+
+                <div class="section-help">
+                    Select the person who paid this expense.
+                </div>
+
+                <div class="member-list">
+
+                    {% for m in members %}
+
+                        <div class="member-option">
+
+                            <input
+                                type="radio"
+                                id="paid-{{ m.id }}"
+                                name="paid_by"
+                                value="{{ m.id }}"
+                                required>
+
+                            <label
+                                for="paid-{{ m.id }}"
+                                class="member-label">
+
+                                <div class="member-avatar">
+                                    👤
+                                </div>
+
+                                <div class="member-name">
+                                    {{ m.name }}
+                                </div>
+
+                                <div class="selection-icon">
+                                    ✓
+                                </div>
+
+                            </label>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- SPLIT AMONG -->
+
+                <div class="section-title">
+                    Split Among
+                </div>
+
+                <div class="section-help">
+                    Select everyone who should share this expense.
+                </div>
+
+                <div class="member-list">
+
+                    {% for m in members %}
+
+                        <div class="member-option">
+
+                            <input
+                                type="checkbox"
+                                id="split-{{ m.id }}"
+                                name="split_among"
+                                value="{{ m.id }}"
+                                checked>
+
+                            <label
+                                for="split-{{ m.id }}"
+                                class="member-label">
+
+                                <div class="member-avatar">
+                                    👤
+                                </div>
+
+                                <div class="member-name">
+                                    {{ m.name }}
+                                </div>
+
+                                <div class="selection-icon">
+                                    ✓
+                                </div>
+
+                            </label>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="submit"
+                        class="add-btn">
+
+                        ➕ Add Expense
+
+                    </button>
+
+                    <a
+                        href="/group/{{ group_code }}"
+                        class="cancel-btn">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+
+            </form>
+
+        </div>
 
     </div>
 
