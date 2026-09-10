@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Splitzee | History</title>
+
+    <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * { box-sizing: border-box; }
+    <title>Splitzee | History</title>
 
-        html, body {
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -15,113 +23,724 @@
 
         body {
             font-family: Arial, sans-serif;
+            color: #1f2937;
 
-            background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
+            background-image:
+                linear-gradient(
+                    rgba(43, 182, 168, 0.88),
+                    rgba(43, 182, 168, 0.88)
+                ),
+                url("{{ url_for('static', filename='app-bg.jpeg') }}");
+
             background-repeat: no-repeat;
-            background-position: center center;
+            background-position: center;
             background-size: cover;
             background-attachment: fixed;
-
-            background-color: #2bb6a8;
         }
 
-        /* ✅ ONLY ADDITION FOR CENTERING */
-        .center-box {
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .page-wrapper {
             min-height: 100vh;
-            display: flex;
-            justify-content: center;   /* horizontal center */
-            align-items: flex-start;   /* allow vertical scroll */
-            padding-top: 60px;
-            padding-bottom: 40px;
+            padding: 22px 16px 40px;
         }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+
+        /* =========================
+           TOP BAR
+        ========================= */
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 18px;
+        }
+
+        .back-btn,
+        .profile-btn {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,255,255,0.96);
+
+            color: #1b2b7a;
+
+            text-decoration: none;
+
+            box-shadow:
+                0 6px 18px rgba(0,0,0,0.12);
+
+            transition: 0.2s ease;
+        }
+
+        .back-btn {
+            border-radius: 14px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .profile-btn {
+            border-radius: 50%;
+            font-size: 18px;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-3px);
+        }
+
+        .profile-btn:hover {
+            transform: scale(1.05);
+        }
+
+
+        /* =========================
+           MAIN CARD
+        ========================= */
 
         .card {
-            background: white;
-            max-width: 420px;
-            width: 100%;
-            padding: 25px;
-            border-radius: 22px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: rgba(255,255,255,0.98);
+
+            border-radius: 28px;
+
+            padding: 24px;
+
+            box-shadow:
+                0 18px 45px rgba(0,0,0,0.18);
+
+            animation: slideUp 0.45s ease;
         }
 
-        h2 {
+        @keyframes slideUp {
+
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .history-header {
             text-align: center;
-            color: #1b2b7a;
+
+            margin-bottom: 24px;
+        }
+
+        .history-icon {
+
+            width: 64px;
+            height: 64px;
+
+            margin: 0 auto 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2bb6a8,
+                    #1c9f92
+                );
+
+            color: white;
+
+            font-size: 28px;
+
+            box-shadow:
+                0 8px 20px rgba(43,182,168,0.30);
+        }
+
+        .history-header h1 {
+
+            margin: 0;
+
+            color: #172554;
+
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .history-header p {
+
+            margin: 7px 0 0;
+
+            color: #7b8494;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           TRIP COUNT
+        ========================= */
+
+        .trip-count {
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 13px 15px;
+
+            margin-bottom: 16px;
+
+            background: #f1faf8;
+
+            border: 1px solid #dcefeb;
+
+            border-radius: 16px;
+        }
+
+        .trip-count span:first-child {
+
+            color: #65717d;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .count-number {
+
+            min-width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: #2bb6a8;
+
+            color: white;
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           GROUP CARDS
+        ========================= */
+
+        .group-list {
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 12px;
         }
 
         .group {
-            padding: 14px;
-            border-radius: 18px;
-            margin-bottom: 12px;
-            background: #eef7f6;
+
+            padding: 17px;
+
+            border-radius: 19px;
+
+            background: #fafbfc;
+
+            border: 1px solid #edf0f3;
+
+            transition: 0.2s ease;
+        }
+
+        .group:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 7px 20px rgba(0,0,0,0.07);
+        }
+
+
+        /* GROUP TOP */
+
+        .group-top {
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 13px;
+        }
+
+        .group-icon {
+
+            width: 45px;
+            height: 45px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background: #e9f8f5;
+
+            font-size: 21px;
+        }
+
+        .group-info {
+
+            min-width: 0;
+            flex: 1;
         }
 
         .group-name {
-            font-weight: bold;
-            color: #1b2b7a;
+
+            color: #24324a;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
+
+        .group-label {
+
+            margin-top: 4px;
+
+            color: #8b95a3;
+
+            font-size: 11px;
+        }
+
+
+        /* =========================
+           STATUS
+        ========================= */
 
         .status {
-            font-size: 13px;
-            margin-top: 5px;
+
+            display: inline-flex;
+            align-items: center;
+
+            gap: 5px;
+
+            padding: 6px 9px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+            font-weight: 700;
         }
 
-        .settled { color: green; }
-        .open { color: red; }
+        .settled {
+
+            color: #247a4b;
+
+            background: #e9f8ee;
+        }
+
+        .open {
+
+            color: #c62828;
+
+            background: #fff0f0;
+        }
+
+
+        /* =========================
+           GROUP FOOTER
+        ========================= */
+
+        .group-footer {
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+
+            padding-top: 12px;
+
+            border-top: 1px solid #edf0f3;
+        }
+
+        .trip-status-label {
+
+            color: #8b95a3;
+
+            font-size: 11px;
+        }
 
         .btn {
-            display: block;
-            margin-top: 8px;
-            padding: 10px;
-            border-radius: 20px;
-            background: #2bb6a8;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 9px 13px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2bb6a8,
+                    #1c9f92
+                );
+
             color: white;
+
             text-decoration: none;
-            text-align: center;
-            font-size: 14px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
         }
 
-        .back {
+        .btn:hover {
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 5px 12px rgba(43,182,168,0.25);
+        }
+
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 38px 18px;
+
+            border-radius: 20px;
+
+            background: #f6fbfa;
+
+            border: 1px dashed #b9e1db;
+        }
+
+        .empty-icon {
+
+            font-size: 38px;
+
+            margin-bottom: 10px;
+        }
+
+        .empty h3 {
+
+            margin: 0 0 6px;
+
+            color: #263449;
+
+            font-size: 17px;
+        }
+
+        .empty p {
+
+            margin: 0;
+
+            color: #89929e;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .bottom-back {
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+
             margin-top: 20px;
-            text-align: center;
+
+            padding: 13px;
+
+            border-radius: 16px;
+
+            background: #eef2f5;
+
+            color: #384454;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
         }
 
-        .back a {
-            color: #1b2b7a;
-            text-decoration: none;
+        .bottom-back:hover {
+
+            background: #e5eaee;
+
+            transform: translateY(-1px);
         }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 480px) {
+
+            .page-wrapper {
+                padding: 14px 12px 30px;
+            }
+
+            .card {
+                padding: 19px 16px;
+                border-radius: 23px;
+            }
+
+            .history-header h1 {
+                font-size: 21px;
+            }
+
+            .group {
+                padding: 14px;
+            }
+
+            .group-top {
+                gap: 9px;
+            }
+
+            .group-icon {
+                width: 42px;
+                height: 42px;
+            }
+
+            .status {
+                font-size: 10px;
+            }
+
+            .btn {
+                padding: 8px 11px;
+            }
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-<div class="center-box">
+<div class="page-wrapper">
 
-    <div class="card">
+    <div class="container">
 
-        <h2>{{ username }}’s Past Trips</h2>
 
-        {% if groups %}
-            {% for g in groups %}
+        <!-- TOP BAR -->
+
+        <div class="top-bar">
+
+            <a href="/groups" class="back-btn">
+                ←
+            </a>
+
+            <a href="/profile" class="profile-btn">
+                👤
+            </a>
+
+        </div>
+
+
+        <!-- MAIN CARD -->
+
+        <div class="card">
+
+
+            <!-- HEADER -->
+
+            <div class="history-header">
+
+                <div class="history-icon">
+                    📜
+                </div>
+
+                <h1>{{ username }}’s Past Trips</h1>
+
+                <p>
+                    View your previous Splitzee groups
+                </p>
+
+            </div>
+
+
+            {% if groups %}
+
+
+            <!-- TRIP COUNT -->
+
+            <div class="trip-count">
+
+                <span>
+                    Previous Trips
+                </span>
+
+                <span class="count-number">
+                    {{ groups|length }}
+                </span>
+
+            </div>
+
+
+            <!-- GROUP LIST -->
+
+            <div class="group-list">
+
+                {% for g in groups %}
+
                 <div class="group">
-                    <div class="group-name">{{ g.name }}</div>
-                    <div class="status">
+
+
+                    <!-- GROUP HEADER -->
+
+                    <div class="group-top">
+
+                        <div class="group-icon">
+                            🧳
+                        </div>
+
+
+                        <div class="group-info">
+
+                            <div class="group-name">
+                                {{ g.name }}
+                            </div>
+
+                            <div class="group-label">
+                                Splitzee Trip
+                            </div>
+
+                        </div>
+
+
                         {% if g.settled %}
-                            <span class="settled">✔ Settled</span>
+
+                        <span class="status settled">
+                            ✓ Settled
+                        </span>
+
                         {% else %}
-                            <span class="open">Settled</span>
+
+                        <span class="status open">
+                            ● Pending
+                        </span>
+
                         {% endif %}
+
                     </div>
 
-                    <a class="btn" href="/group/{{ g.code }}/settle">View Summary</a>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No history yet</p>
-        {% endif %}
 
-        <div class="back">
-            <a href="/groups">← Back to Groups</a>
+                    <!-- GROUP FOOTER -->
+
+                    <div class="group-footer">
+
+                        <span class="trip-status-label">
+
+                            {% if g.settled %}
+                                Trip completed
+                            {% else %}
+                                Settlement pending
+                            {% endif %}
+
+                        </span>
+
+
+                        <a
+                            class="btn"
+                            href="/group/{{ g.code }}/settle"
+                        >
+                            View Summary →
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            {% else %}
+
+
+            <!-- EMPTY STATE -->
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🧳
+                </div>
+
+                <h3>
+                    No past trips yet
+                </h3>
+
+                <p>
+                    Your completed and previous groups
+                    will appear here.
+                </p>
+
+            </div>
+
+
+            {% endif %}
+
+
+            <!-- BACK -->
+
+            <a
+                href="/groups"
+                class="bottom-back"
+            >
+                ← Back to My Groups
+            </a>
+
+
         </div>
 
     </div>
