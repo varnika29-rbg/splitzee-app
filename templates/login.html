@@ -1,187 +1,653 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Splitzee | Login</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="manifest" href="/static/manifest.json">
-<meta name="theme-color" content="#2bb6a8">
+    <meta charset="UTF-8">
 
-<style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
+    <title>Splitzee | Login</title>
 
-html,body{
-height:100%;
-}
+    <link rel="manifest" href="/static/manifest.json">
 
-/* BACKGROUND */
+    <meta name="theme-color" content="#2bb6a8">
 
-body{
-font-family: Arial, sans-serif;
-background-image: url("{{ url_for('static', filename='app-bg.jpeg') }}");
-background-repeat:no-repeat;
-background-position:center;
-background-size:cover;
-display:flex;
-justify-content:center;
-align-items:center;
-}
+    <style>
 
-/* CENTER CONTAINER */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-.center-box{
-width:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-}
+        html,
+        body {
+            min-height: 100%;
+        }
 
-/* LOGIN CARD */
+        body {
+            font-family: Arial, sans-serif;
 
-.card{
-background:rgba(255,255,255,0.95);
-width:340px;
-padding:35px;
-border-radius:22px;
-text-align:center;
-box-shadow:0 15px 40px rgba(0,0,0,0.25);
-backdrop-filter:blur(6px);
-}
+            background-image:
+                linear-gradient(
+                    rgba(43, 182, 168, 0.86),
+                    rgba(43, 182, 168, 0.86)
+                ),
+                url("{{ url_for('static', filename='app-bg.jpeg') }}");
 
-/* LOGO */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
 
-.app-logo{
-width:100px;
-margin-bottom:10px;
-}
+            min-height: 100vh;
 
-/* TITLE */
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-h2{
-margin-bottom:15px;
-color:#1b2b7a;
-}
+            padding: 25px 16px;
+        }
 
-/* INPUT */
 
-input{
-width:100%;
-padding:13px;
-border-radius:12px;
-border:1px solid #ddd;
-margin-bottom:15px;
-font-size:14px;
-transition:0.2s;
-}
+        /* =========================
+           PAGE
+        ========================= */
 
-input:focus{
-border-color:#2bb6a8;
-outline:none;
-box-shadow:0 0 6px rgba(43,182,168,0.3);
-}
+        .page {
+            width: 100%;
+            max-width: 430px;
 
-/* BUTTON */
+            animation: fadeIn 0.5s ease;
+        }
 
-button{
-width:100%;
-padding:13px;
-border-radius:25px;
-border:none;
-background:linear-gradient(135deg,#2bb6a8,#1a8f84);
-color:white;
-font-size:15px;
-font-weight:bold;
-cursor:pointer;
-transition:0.2s;
-}
+        @keyframes fadeIn {
 
-button:hover{
-transform:translateY(-2px);
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
-}
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
 
-/* OTP BOX */
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
 
-.otp-box{
-margin:15px 0;
-font-size:18px;
-letter-spacing:3px;
-color:#1b2b7a;
-font-weight:bold;
-}
+        }
 
-/* ERROR */
 
-.error{
-color:red;
-font-size:14px;
-margin-top:10px;
-}
+        /* =========================
+           CARD
+        ========================= */
 
-</style>
+        .card {
+            width: 100%;
+
+            padding: 32px 30px;
+
+            background: rgba(255,255,255,0.97);
+
+            border-radius: 28px;
+
+            text-align: center;
+
+            box-shadow:
+                0 22px 55px rgba(0,0,0,0.20);
+
+            backdrop-filter: blur(10px);
+        }
+
+
+        /* =========================
+           LOGO
+        ========================= */
+
+        .logo-wrapper {
+
+            width: 82px;
+            height: 82px;
+
+            margin: 0 auto 15px;
+
+            padding: 7px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e4f9f5,
+                    #f4fffd
+                );
+
+            box-shadow:
+                0 7px 18px rgba(43,182,168,0.15);
+        }
+
+        .app-logo {
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+
+            border-radius: 17px;
+        }
+
+
+        /* =========================
+           TITLE
+        ========================= */
+
+        .title {
+
+            color: #172554;
+
+            font-size: 26px;
+            font-weight: 800;
+
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+
+            color: #7d8792;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-group {
+            text-align: left;
+
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #39465a;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        input {
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border-radius: 14px;
+
+            border: 1px solid #dce2e7;
+
+            background: #f9fafb;
+
+            color: #273449;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.2s ease;
+        }
+
+        input::placeholder {
+            color: #a0a8b2;
+        }
+
+        input:focus {
+
+            border-color: #2bb6a8;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(43,182,168,0.10);
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        button {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-top: 5px;
+
+            border: none;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2bb6a8,
+                    #1c9f92
+                );
+
+            color: white;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 14px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 9px 20px rgba(43,182,168,0.24);
+
+            transition: 0.2s ease;
+        }
+
+        button:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 24px rgba(43,182,168,0.30);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+
+        /* =========================
+           OTP SCREEN
+        ========================= */
+
+        .hello {
+
+            margin-bottom: 16px;
+
+            color: #697583;
+
+            font-size: 14px;
+        }
+
+        .hello b {
+            color: #172554;
+        }
+
+        .otp-container {
+
+            padding: 18px;
+
+            margin-bottom: 18px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eaf9f6,
+                    #f3fcfb
+                );
+
+            border: 1px solid #d5efeb;
+        }
+
+        .otp-label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #75818d;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            font-weight: 700;
+        }
+
+        .otp-box {
+
+            color: #168f82;
+
+            font-size: 27px;
+
+            letter-spacing: 5px;
+
+            font-weight: 800;
+        }
+
+
+        /* =========================
+           ERROR
+        ========================= */
+
+        .error {
+
+            margin-top: 14px;
+
+            padding: 10px 12px;
+
+            border-radius: 12px;
+
+            background: #fff0f0;
+
+            color: #c62828;
+
+            font-size: 12px;
+
+            line-height: 1.4;
+        }
+
+
+        /* =========================
+           LOGIN INFO
+        ========================= */
+
+        .info {
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            margin-top: 20px;
+
+            color: #8b95a0;
+
+            font-size: 11px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+
+            margin-top: 18px;
+
+            color: rgba(255,255,255,0.90);
+
+            text-align: center;
+
+            font-size: 11px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 18px 12px;
+            }
+
+            .card {
+                padding: 27px 20px;
+
+                border-radius: 24px;
+            }
+
+            .logo-wrapper {
+                width: 72px;
+                height: 72px;
+
+                border-radius: 21px;
+            }
+
+            .title {
+                font-size: 23px;
+            }
+
+            .subtitle {
+                margin-bottom: 21px;
+            }
+
+            input {
+                padding: 13px;
+            }
+
+            button {
+                padding: 13px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-<div class="center-box">
 
-<div class="card">
+<div class="page">
 
-<img src="{{ url_for('static', filename='icon.png') }}" class="app-logo">
 
-<h2>Splitzee</h2>
+    <div class="card">
 
-{% if step == "name" %}
-<form method="POST">
 
-<input type="hidden" name="action" value="generate_otp">
+        <!-- LOGO -->
 
-<input type="text"
-name="display_name"
-placeholder="Your name (shown to others)"
-required>
+        <div class="logo-wrapper">
 
-<input type="text"
-name="user_id"
-placeholder="Username (unique, no spaces)"
-required>
+            <img
+                src="{{ url_for('static', filename='icon.png') }}"
+                class="app-logo"
+                alt="Splitzee"
+            >
 
-<button type="submit">Generate OTP</button>
+        </div>
 
-</form>
-{% endif %}
 
-{% if step == "otp" %}
+        <!-- TITLE -->
 
-<p>Hello <b>{{ display_name }}</b></p>
+        <div class="title">
+            Splitzee
+        </div>
 
-<div class="otp-box">OTP: {{ otp }}</div>
 
-<form method="POST">
+        {% if step == "name" %}
 
-<input type="hidden" name="action" value="verify_otp">
 
-<input type="text" name="otp" placeholder="Enter OTP" required>
+        <p class="subtitle">
+            Enter your details to start
+            splitting expenses with your group.
+        </p>
 
-<button type="submit">Verify & Login</button>
 
-</form>
+        <!-- NAME FORM -->
 
-{% if error %}
-<p class="error">{{ error }}</p>
-{% endif %}
+        <form method="POST">
 
-{% endif %}
+            <input
+                type="hidden"
+                name="action"
+                value="generate_otp"
+            >
+
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="display_name"
+                >
+                    Display Name
+                </label>
+
+                <input
+                    id="display_name"
+                    type="text"
+                    name="display_name"
+                    placeholder="Your name"
+                    autocomplete="name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="user_id"
+                >
+                    Username
+                </label>
+
+                <input
+                    id="user_id"
+                    type="text"
+                    name="user_id"
+                    placeholder="Choose a unique username"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+
+            <button type="submit">
+                Generate OTP →
+            </button>
+
+        </form>
+
+
+        <div class="info">
+            🔒 Your username identifies you in groups
+        </div>
+
+
+        {% endif %}
+
+
+
+        {% if step == "otp" %}
+
+
+        <p class="subtitle">
+            One more step to enter your Splitzee account.
+        </p>
+
+
+        <div class="hello">
+            Hello <b>{{ display_name }}</b> 👋
+        </div>
+
+
+        <!-- OTP -->
+
+        <div class="otp-container">
+
+            <span class="otp-label">
+                Your OTP
+            </span>
+
+            <div class="otp-box">
+                {{ otp }}
+            </div>
+
+        </div>
+
+
+        <!-- OTP FORM -->
+
+        <form method="POST">
+
+            <input
+                type="hidden"
+                name="action"
+                value="verify_otp"
+            >
+
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="otp"
+                >
+                    Enter OTP
+                </label>
+
+                <input
+                    id="otp"
+                    type="text"
+                    name="otp"
+                    placeholder="Enter your OTP"
+                    inputmode="numeric"
+                    autocomplete="one-time-code"
+                    required
+                >
+
+            </div>
+
+
+            <button type="submit">
+                Verify & Login →
+            </button>
+
+        </form>
+
+
+        {% if error %}
+
+        <p class="error">
+            ⚠ {{ error }}
+        </p>
+
+        {% endif %}
+
+
+        <div class="info">
+            🔐 Enter the OTP shown above to continue
+        </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+    <div class="footer">
+        © Splitzee – Smart Expense Sharing
+    </div>
+
 
 </div>
 
-</div>
 
 </body>
+
 </html>
