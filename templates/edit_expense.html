@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit Expense</title>
+    <title>Splitzee | Edit Expense</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
         html, body {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            min-height: 100%;
         }
 
         body {
@@ -21,102 +26,594 @@
             background-attachment: fixed;
 
             background-color: #2bb6a8;
+            color: #333;
         }
 
-        /* ✅ ONLY ADDITION FOR CENTERING */
-        .center-box {
+
+        /* ================= PAGE ================= */
+
+        .page-wrapper {
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 30px 15px 40px;
         }
 
-        .card {
-            background: white;
-            max-width: 420px;
+        .edit-container {
             width: 100%;
-            padding: 20px;
-            border-radius: 22px;
-            box-shadow: 0 10px 30px rgba(0,0,0,.2);
+            max-width: 560px;
+            margin: auto;
         }
 
-        h2 {
-            text-align: center;
+
+        /* ================= TOP BAR ================= */
+
+        .top-bar {
+            background: rgba(255,255,255,0.96);
+            border-radius: 22px;
+            padding: 17px 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+
+            margin-bottom: 16px;
+        }
+
+        .brand {
+            font-size: 23px;
+            font-weight: bold;
             color: #1b2b7a;
         }
 
-        label {
-            font-size: 14px;
-            color: #333;
-            display: block;
-            margin-top: 12px;
+        .brand span {
+            color: #2bb6a8;
         }
 
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 4px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
+        .back-top {
+            width: 40px;
+            height: 40px;
 
-        .checkbox {
-            margin-top: 6px;
-        }
+            border-radius: 50%;
 
-        button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 18px;
-            border: none;
-            border-radius: 25px;
-            background: #2bb6a8;
-            color: white;
-            font-size: 15px;
-        }
+            background: #e7f7f5;
 
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
             text-decoration: none;
-            color: #555;
+
+            font-size: 19px;
         }
+
+
+        /* ================= MAIN CARD ================= */
+
+        .edit-card {
+            background: white;
+
+            border-radius: 25px;
+
+            padding: 25px 22px;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .edit-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .edit-icon {
+            width: 64px;
+            height: 64px;
+
+            border-radius: 20px;
+
+            background: #e7f7f5;
+
+            margin: 0 auto 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+        }
+
+        .edit-header h2 {
+            margin: 0;
+
+            color: #1b2b7a;
+
+            font-size: 25px;
+        }
+
+        .edit-subtitle {
+            margin-top: 6px;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-top: 18px;
+        }
+
+        label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #333;
+
+            margin-bottom: 7px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 13px;
+
+            background: #fafafa;
+
+            color: #333;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: border 0.2s ease,
+                        box-shadow 0.2s ease,
+                        background 0.2s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #2bb6a8;
+
+            background: white;
+
+            box-shadow: 0 0 0 3px rgba(43,182,168,0.12);
+        }
+
+
+        /* ================= AMOUNT ================= */
+
+        .amount-wrapper {
+            position: relative;
+        }
+
+        .currency {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-weight: bold;
+
+            color: #2bb6a8;
+
+            pointer-events: none;
+        }
+
+        .amount-wrapper input {
+            padding-left: 34px;
+        }
+
+
+        /* ================= SPLIT MEMBERS ================= */
+
+        .split-title {
+            margin-top: 22px;
+            margin-bottom: 9px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #333;
+        }
+
+        .member-list {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+        }
+
+        .member-option {
+            position: relative;
+        }
+
+        .member-option input {
+            position: absolute;
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+        .member-label {
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            padding: 12px 13px;
+
+            border-radius: 14px;
+
+            background: #f5f9f8;
+
+            border: 1px solid #e5eeee;
+
+            cursor: pointer;
+
+            transition: all 0.2s ease;
+        }
+
+        .member-avatar {
+            width: 36px;
+            height: 36px;
+
+            min-width: 36px;
+
+            border-radius: 50%;
+
+            background: #e7f7f5;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+        }
+
+        .member-name {
+            flex: 1;
+
+            font-size: 14px;
+
+            font-weight: 500;
+        }
+
+        .check-icon {
+            width: 22px;
+            height: 22px;
+
+            border-radius: 50%;
+
+            border: 2px solid #cbd8d6;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 12px;
+
+            color: transparent;
+        }
+
+        .member-option input:checked + .member-label {
+            background: #e7f7f5;
+
+            border-color: #2bb6a8;
+        }
+
+        .member-option input:checked + .member-label .check-icon {
+            background: #2bb6a8;
+
+            border-color: #2bb6a8;
+
+            color: white;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .form-actions {
+            margin-top: 24px;
+        }
+
+        .save-btn {
+            width: 100%;
+
+            min-height: 50px;
+
+            border: none;
+
+            border-radius: 26px;
+
+            background: #2bb6a8;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: transform 0.15s ease,
+                        box-shadow 0.15s ease;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow: 0 6px 18px rgba(43,182,168,0.3);
+        }
+
+        .cancel-btn {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+
+            min-height: 48px;
+
+            margin-top: 10px;
+
+            border-radius: 25px;
+
+            background: #eeeeee;
+
+            color: #333;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 600px) {
+
+            .page-wrapper {
+                padding: 12px 10px 25px;
+            }
+
+            .top-bar {
+                padding: 14px 16px;
+
+                border-radius: 18px;
+            }
+
+            .brand {
+                font-size: 21px;
+            }
+
+            .edit-card {
+                padding: 22px 16px;
+
+                border-radius: 20px;
+            }
+
+            .edit-header h2 {
+                font-size: 22px;
+            }
+
+        }
+
     </style>
 </head>
 
+
 <body>
 
-<div class="center-box">
+<div class="page-wrapper">
 
-    <div class="card">
-        <h2>Edit Expense</h2>
+    <div class="edit-container">
 
-        <form method="POST">
-            <label>Title</label>
-            <input name="title" value="{{ expense.title }}" required>
 
-            <label>Amount</label>
-            <input type="number" step="0.01" name="amount" value="{{ expense.amount }}" required>
+        <!-- TOP BAR -->
 
-            <label>Paid By</label>
-            <input name="paid_by" value="{{ expense.paid_by }}" required>
+        <div class="top-bar">
 
-            <label>Split Among</label>
-            {% for m in members %}
-                <div class="checkbox">
-                    <input type="checkbox"
-                           name="split_among"
-                           value="{{ m.id }}"
-                           {% if m.id in expense.split_among %}checked{% endif %}>
-                    {{ m.name }}
+            <div class="brand">
+                Split<span>zee</span>
+            </div>
+
+            <a
+                href="/group/{{ group_code }}"
+                class="back-top"
+                title="Back to group">
+                ←
+            </a>
+
+        </div>
+
+
+        <!-- EDIT CARD -->
+
+        <div class="edit-card">
+
+
+            <!-- HEADER -->
+
+            <div class="edit-header">
+
+                <div class="edit-icon">
+                    ✏️
                 </div>
-            {% endfor %}
 
-            <button type="submit">💾 Save Changes</button>
-        </form>
+                <h2>
+                    Edit Expense
+                </h2>
 
-        <a href="/group/{{ group_code }}">⬅ Back</a>
+                <div class="edit-subtitle">
+                    Update the details of this expense
+                </div>
+
+            </div>
+
+
+            <!-- FORM -->
+
+            <form method="POST">
+
+
+                <!-- TITLE -->
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Expense Title
+                    </label>
+
+                    <input
+                        id="title"
+                        type="text"
+                        name="title"
+                        value="{{ expense.title }}"
+                        placeholder="e.g. Hotel, Food, Taxi"
+                        required>
+
+                </div>
+
+
+                <!-- AMOUNT -->
+
+                <div class="form-group">
+
+                    <label for="amount">
+                        Amount
+                    </label>
+
+                    <div class="amount-wrapper">
+
+                        <span class="currency">
+                            ₹
+                        </span>
+
+                        <input
+                            id="amount"
+                            type="number"
+                            step="0.01"
+                            name="amount"
+                            value="{{ expense.amount }}"
+                            placeholder="0.00"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PAID BY -->
+
+                <div class="form-group">
+
+                    <label for="paid_by">
+                        Paid By
+                    </label>
+
+                    <input
+                        id="paid_by"
+                        type="text"
+                        name="paid_by"
+                        value="{{ expense.paid_by }}"
+                        required>
+
+                </div>
+
+
+                <!-- SPLIT AMONG -->
+
+                <div class="split-title">
+                    Split Among
+                </div>
+
+                <div class="member-list">
+
+                    {% for m in members %}
+
+                        <div class="member-option">
+
+                            <input
+                                type="checkbox"
+                                id="member-{{ m.id }}"
+                                name="split_among"
+                                value="{{ m.id }}"
+                                {% if m.id in expense.split_among %}checked{% endif %}>
+
+                            <label
+                                for="member-{{ m.id }}"
+                                class="member-label">
+
+                                <div class="member-avatar">
+                                    👤
+                                </div>
+
+                                <div class="member-name">
+                                    {{ m.name }}
+                                </div>
+
+                                <div class="check-icon">
+                                    ✓
+                                </div>
+
+                            </label>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="submit"
+                        class="save-btn">
+
+                        💾 Save Changes
+
+                    </button>
+
+                    <a
+                        href="/group/{{ group_code }}"
+                        class="cancel-btn">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
     </div>
 
 </div>
