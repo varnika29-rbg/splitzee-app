@@ -1,257 +1,1170 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 
-<title>Splitzee</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-body{
-margin:0;
-font-family:Arial;
-background:#f8f9fb;
-}
+    <title>Splitzee | Smart Expense Sharing</title>
 
-/* NAVBAR */
+    <style>
 
-.navbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 40px;
-background:white;
-box-shadow:0 2px 10px rgba(0,0,0,0.05);
-}
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
 
-.logo{
-font-size:22px;
-font-weight:bold;
-color:#2bb6a8;
-}
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
 
-.nav-links a{
-margin-left:20px;
-text-decoration:none;
-color:#333;
-font-size:14px;
-}
+        body {
+            font-family: Arial, sans-serif;
+            color: #1f2937;
+            background: #f7faf9;
+        }
 
-.login-btn{
-background:#2bb6a8;
-color:white;
-padding:10px 18px;
-border-radius:20px;
-text-decoration:none;
-}
 
-/* HERO SECTION */
+        /* =========================
+           NAVBAR
+        ========================= */
 
-.hero{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:80px 60px;
-flex-wrap:wrap;
-}
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
 
-.hero-text{
-max-width:500px;
-}
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-.hero-text h1{
-font-size:42px;
-margin-bottom:15px;
-}
+            padding: 15px 7%;
 
-.hero-text span{
-color:#2bb6a8;
-}
+            background: rgba(255,255,255,0.96);
 
-.hero-text p{
-color:#555;
-font-size:16px;
-line-height:1.6;
-}
+            backdrop-filter: blur(12px);
 
-.hero-btn{
-margin-top:20px;
-display:inline-block;
-background:#2bb6a8;
-color:white;
-padding:12px 26px;
-border-radius:25px;
-text-decoration:none;
-}
+            border-bottom: 1px solid #edf1f1;
 
-.hero img{
-width:420px;
-max-width:100%;
-}
+            box-shadow:
+                0 3px 18px rgba(0,0,0,0.05);
+        }
 
-/* FEATURES */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
 
-.features{
-background:white;
-padding:70px 40px;
-text-align:center;
-}
+            color: #20a99b;
 
-.features h2{
-margin-bottom:30px;
-}
+            font-size: 23px;
+            font-weight: 800;
 
-.feature-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:25px;
-}
+            text-decoration: none;
+        }
 
-.feature{
-background:#f7f7f7;
-padding:25px;
-border-radius:15px;
-}
+        .logo-icon {
+            width: 36px;
+            height: 36px;
 
-.feature h3{
-color:#1b2b7a;
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-/* HOW IT WORKS */
+            border-radius: 11px;
 
-.steps{
-padding:70px 40px;
-text-align:center;
-}
+            background:
+                linear-gradient(
+                    135deg,
+                    #2bb6a8,
+                    #168f82
+                );
 
-.step-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:25px;
-margin-top:30px;
-}
+            color: white;
 
-.step{
-background:white;
-padding:25px;
-border-radius:15px;
-box-shadow:0 6px 20px rgba(0,0,0,0.1);
-}
+            font-size: 18px;
 
-/* FOOTER */
+            box-shadow:
+                0 5px 12px rgba(43,182,168,0.25);
+        }
 
-.footer{
-text-align:center;
-padding:30px;
-background:#eee;
-margin-top:40px;
-font-size:14px;
-}
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
 
-</style>
+        .nav-links a {
+            color: #46505d;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition: 0.2s ease;
+        }
+
+        .nav-links a:not(.login-btn):hover {
+            color: #20a99b;
+        }
+
+        .login-btn {
+            padding: 10px 19px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2bb6a8,
+                    #1c9f92
+                );
+
+            color: white !important;
+
+            box-shadow:
+                0 6px 15px rgba(43,182,168,0.22);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+
+            min-height: 650px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 60px;
+
+            padding: 80px 8%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #effbf9,
+                    #ffffff
+                );
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 350px;
+            height: 350px;
+
+            border-radius: 50%;
+
+            background: #d9f4ef;
+
+            top: -150px;
+            right: -100px;
+
+            opacity: 0.65;
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 1;
+
+            max-width: 570px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 8px 13px;
+
+            margin-bottom: 18px;
+
+            border-radius: 20px;
+
+            background: #e3f8f4;
+
+            color: #178d80;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .hero-text h1 {
+            margin: 0;
+
+            color: #172554;
+
+            font-size: clamp(38px, 5vw, 60px);
+
+            line-height: 1.08;
+
+            letter-spacing: -1.5px;
+        }
+
+        .hero-text h1 span {
+            color: #2bb6a8;
+        }
+
+        .hero-text p {
+            max-width: 520px;
+
+            margin: 20px 0 0;
+
+            color: #68737e;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            margin-top: 27px;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 13px 22px;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2bb6a8,
+                    #1c9f92
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            box-shadow:
+                0 9px 20px rgba(43,182,168,0.25);
+
+            transition: 0.2s ease;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .hero-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 12px 20px;
+
+            border-radius: 25px;
+
+            background: white;
+
+            color: #364152;
+
+            border: 1px solid #dce5e4;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+        .hero-secondary:hover {
+            border-color: #2bb6a8;
+            color: #168f82;
+        }
+
+
+        /* =========================
+           HERO IMAGE
+        ========================= */
+
+        .hero-visual {
+            position: relative;
+            z-index: 1;
+
+            width: 420px;
+            max-width: 42%;
+        }
+
+        .hero-image-card {
+            padding: 15px;
+
+            border-radius: 30px;
+
+            background: white;
+
+            box-shadow:
+                0 25px 60px rgba(24,100,92,0.16);
+
+            transform: rotate(2deg);
+
+            animation: floating 4s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: rotate(2deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(2deg) translateY(-9px);
+            }
+
+        }
+
+        .hero-image-card img {
+            display: block;
+
+            width: 100%;
+
+            border-radius: 20px;
+        }
+
+
+        /* =========================
+           TRUST STRIP
+        ========================= */
+
+        .trust-strip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 45px;
+
+            padding: 17px 20px;
+
+            background: #172554;
+
+            color: white;
+
+            text-align: center;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .features {
+            padding: 85px 7%;
+
+            background: white;
+
+            text-align: center;
+        }
+
+        .section-badge {
+            display: inline-block;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            background: #eaf9f6;
+
+            color: #188f82;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+        .features h2,
+        .steps h2 {
+            margin: 12px 0 8px;
+
+            color: #172554;
+
+            font-size: 30px;
+        }
+
+        .section-subtitle {
+            max-width: 500px;
+
+            margin: 0 auto 38px;
+
+            color: #7a8590;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        .feature-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 18px;
+
+            max-width: 1150px;
+
+            margin: auto;
+        }
+
+        .feature {
+            padding: 25px 20px;
+
+            border-radius: 21px;
+
+            background: #f8fafb;
+
+            border: 1px solid #edf1f2;
+
+            text-align: left;
+
+            transition: 0.25s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 12px 28px rgba(0,0,0,0.07);
+
+            border-color: #d8efeb;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 17px;
+
+            border-radius: 15px;
+
+            background: #e7f8f5;
+
+            font-size: 22px;
+        }
+
+        .feature h3 {
+            margin: 0 0 8px;
+
+            color: #24324a;
+
+            font-size: 15px;
+        }
+
+        .feature p {
+            margin: 0;
+
+            color: #7c8792;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           HOW IT WORKS
+        ========================= */
+
+        .steps {
+            padding: 85px 7%;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #f6fbfa,
+                    #eef8f6
+                );
+
+            text-align: center;
+        }
+
+        .step-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 22px;
+
+            max-width: 950px;
+
+            margin: 40px auto 0;
+        }
+
+        .step {
+            position: relative;
+
+            padding: 30px 24px;
+
+            background: white;
+
+            border-radius: 23px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.07);
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 16px;
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2bb6a8,
+                    #1c9f92
+                );
+
+            color: white;
+
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .step h3 {
+            margin: 0 0 8px;
+
+            color: #24324a;
+
+            font-size: 16px;
+        }
+
+        .step p {
+            margin: 0;
+
+            color: #7b8792;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           CTA
+        ========================= */
+
+        .cta {
+            padding: 75px 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #172554,
+                    #20356e
+                );
+
+            text-align: center;
+        }
+
+        .cta h2 {
+            margin: 0;
+
+            color: white;
+
+            font-size: 30px;
+        }
+
+        .cta p {
+            max-width: 480px;
+
+            margin: 12px auto 25px;
+
+            color: #dce3f2;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+
+            padding: 13px 24px;
+
+            border-radius: 25px;
+
+            background: #2bb6a8;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            padding: 25px 20px;
+
+            background: #111b3a;
+
+            color: #aeb8cd;
+
+            text-align: center;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .navbar {
+                padding: 13px 5%;
+            }
+
+            .hero {
+                min-height: auto;
+
+                padding: 65px 6%;
+
+                gap: 45px;
+            }
+
+            .hero-visual {
+                width: 360px;
+                max-width: 80%;
+
+                margin: auto;
+            }
+
+            .feature-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                gap: 12px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a:not(.login-btn) {
+                display: none;
+            }
+
+            .login-btn {
+                padding: 8px 14px;
+            }
+
+            .hero {
+                flex-direction: column;
+
+                text-align: center;
+
+                padding: 55px 20px 65px;
+            }
+
+            .hero-text {
+                max-width: 600px;
+            }
+
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .hero-visual {
+                max-width: 90%;
+            }
+
+            .trust-strip {
+                flex-direction: column;
+
+                gap: 10px;
+
+                padding: 15px;
+            }
+
+            .features,
+            .steps {
+                padding: 65px 20px;
+            }
+
+            .features h2,
+            .steps h2,
+            .cta h2 {
+                font-size: 25px;
+            }
+
+            .feature-grid,
+            .step-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 400px) {
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .logo-icon {
+                width: 33px;
+                height: 33px;
+            }
+
+            .hero-text h1 {
+                font-size: 36px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .hero-btn,
+            .hero-secondary {
+                width: 100%;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-<!-- NAVBAR -->
 
-<div class="navbar">
+<!-- =========================
+     NAVBAR
+========================= -->
 
-<div class="logo">Splitzee</div>
+<nav class="navbar">
 
-<div class="nav-links">
-<a href="#features">Features</a>
-<a href="#how">How it works</a>
-<a href="/login" class="login-btn">Login</a>
-</div>
+    <a href="/" class="logo">
 
-</div>
+        <span class="logo-icon">
+            ₹
+        </span>
 
-<!-- HERO -->
+        Splitzee
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="#features">
+            Features
+        </a>
+
+        <a href="#how">
+            How it works
+        </a>
+
+        <a href="/login" class="login-btn">
+            Login
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     HERO
+========================= -->
 
 <section class="hero">
 
-<div class="hero-text">
+    <div class="hero-text">
 
-<h1>Split Expenses <span>Smartly</span></h1>
+        <div class="hero-badge">
+            ✨ Simple • Smart • Stress-free
+        </div>
 
-<p>
-Track group expenses after trips, dinners, or shared living.
-Splitzee automatically calculates who owes whom.
-</p>
 
-<a href="/login" class="hero-btn">Start Splitting</a>
+        <h1>
+            Split Expenses
+            <span>Without Confusion</span>
+        </h1>
 
-</div>
 
-<img src="{{ url_for('static', filename='split.png') }}">
+        <p>
+            Track group expenses after trips, dinners,
+            events, or shared living. Splitzee makes it
+            easy to know exactly who owes whom.
+        </p>
 
-</section>
 
-<!-- FEATURES -->
+        <div class="hero-actions">
 
-<section id="features" class="features">
+            <a
+                href="/login"
+                class="hero-btn"
+            >
+                Start Splitting →
+            </a>
 
-<h2>Features</h2>
+            <a
+                href="#how"
+                class="hero-secondary"
+            >
+                How it works
+            </a>
 
-<div class="feature-grid">
+        </div>
 
-<div class="feature">
-<h3>Easy Expense Tracking</h3>
-<p>Add expenses in seconds.</p>
-</div>
+    </div>
 
-<div class="feature">
-<h3>Automatic Settlement</h3>
-<p>Instantly see who owes whom.</p>
-</div>
 
-<div class="feature">
-<h3>Group Based</h3>
-<p>Create groups for trips or roommates.</p>
-</div>
+    <div class="hero-visual">
 
-<div class="feature">
-<h3>History</h3>
-<p>View past trips and settlements.</p>
-</div>
+        <div class="hero-image-card">
 
-</div>
+            <img
+                src="{{ url_for('static', filename='split.png') }}"
+                alt="Splitzee expense sharing"
+            >
 
-</section>
+        </div>
 
-<!-- HOW IT WORKS -->
-
-<section id="how" class="steps">
-
-<h2>How Splitzee Works</h2>
-
-<div class="step-grid">
-
-<div class="step">
-<h3>1. Create Group</h3>
-<p>Create a group for your trip or event.</p>
-</div>
-
-<div class="step">
-<h3>2. Add Expenses</h3>
-<p>Record who paid and how to split.</p>
-</div>
-
-<div class="step">
-<h3>3. Settle Up</h3>
-<p>Splitzee calculates payments automatically.</p>
-</div>
-
-</div>
+    </div>
 
 </section>
 
-<div class="footer">
-© Splitzee – Smart Expense Sharing
+
+
+<!-- =========================
+     TRUST STRIP
+========================= -->
+
+<div class="trust-strip">
+
+    <div class="trust-item">
+        ✓ Easy expense tracking
+    </div>
+
+    <div class="trust-item">
+        ✓ Automatic calculations
+    </div>
+
+    <div class="trust-item">
+        ✓ Simple group settlement
+    </div>
+
 </div>
+
+
+
+<!-- =========================
+     FEATURES
+========================= -->
+
+<section
+    id="features"
+    class="features"
+>
+
+    <span class="section-badge">
+        Features
+    </span>
+
+
+    <h2>
+        Everything You Need
+    </h2>
+
+
+    <p class="section-subtitle">
+        Keep group expenses organized and make
+        settling up simple.
+    </p>
+
+
+    <div class="feature-grid">
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🧾
+            </div>
+
+            <h3>
+                Easy Expense Tracking
+            </h3>
+
+            <p>
+                Add expenses quickly and keep
+                every group payment organized.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🔄
+            </div>
+
+            <h3>
+                Automatic Settlement
+            </h3>
+
+            <p>
+                See exactly who needs to pay
+                whom and how much.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                👥
+            </div>
+
+            <h3>
+                Group Based
+            </h3>
+
+            <p>
+                Create separate groups for trips,
+                dinners, events, or roommates.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📜
+            </div>
+
+            <h3>
+                Expense History
+            </h3>
+
+            <p>
+                Keep track of previous groups
+                and their settlement status.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     HOW IT WORKS
+========================= -->
+
+<section
+    id="how"
+    class="steps"
+>
+
+    <span class="section-badge">
+        How it works
+    </span>
+
+
+    <h2>
+        Three Simple Steps
+    </h2>
+
+
+    <p class="section-subtitle">
+        No complicated calculations. Just add,
+        split, and settle.
+    </p>
+
+
+    <div class="step-grid">
+
+
+        <div class="step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <h3>
+                Create a Group
+            </h3>
+
+            <p>
+                Create a group for your trip,
+                event, dinner, or shared expenses.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <h3>
+                Add Expenses
+            </h3>
+
+            <p>
+                Record the amount, payer,
+                and members sharing the expense.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <h3>
+                Settle Up
+            </h3>
+
+            <p>
+                Splitzee calculates the balances
+                and shows who owes whom.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     CTA
+========================= -->
+
+<section class="cta">
+
+    <h2>
+        Ready to Split Smarter?
+    </h2>
+
+    <p>
+        Start managing your group expenses
+        without the confusion.
+    </p>
+
+    <a
+        href="/login"
+        class="cta-btn"
+    >
+        Get Started →
+    </a>
+
+</section>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    © Splitzee – Smart Expense Sharing
+
+</footer>
+
 
 </body>
 </html>
-
