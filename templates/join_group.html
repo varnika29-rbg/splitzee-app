@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <title>Splitzee | Join Group</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        html, body {
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            min-height: 100%;
         }
 
         body {
@@ -21,67 +29,435 @@
             background-attachment: fixed;
 
             background-color: #2bb6a8;
+            color: #333;
         }
 
-        /* ✅ ONLY ADDITION FOR CENTERING */
-        .center-box {
+
+        /* ================= PAGE ================= */
+
+        .page-wrapper {
             min-height: 100vh;
+
+            padding: 30px 15px 40px;
+
             display: flex;
-            justify-content: center;
+
             align-items: center;
+
+            justify-content: center;
         }
 
-        .card {
-            background: white;
-            width: 340px;
-            padding: 28px;
+        .join-container {
+            width: 100%;
+
+            max-width: 520px;
+        }
+
+
+        /* ================= TOP BAR ================= */
+
+        .top-bar {
+            background: rgba(255,255,255,0.96);
+
             border-radius: 22px;
-            box-shadow: 0 10px 30px rgba(0,0,0,.2);
+
+            padding: 17px 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+
+            margin-bottom: 16px;
         }
 
-        h2 {
-            text-align: center;
+        .brand {
+            font-size: 23px;
+
+            font-weight: bold;
+
             color: #1b2b7a;
-            margin-top: 0;
-            margin-bottom: 22px;
+        }
+
+        .brand span {
+            color: #2bb6a8;
+        }
+
+        .back-top {
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 50%;
+
+            background: #e7f7f5;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-decoration: none;
+
+            font-size: 19px;
+        }
+
+
+        /* ================= MAIN CARD ================= */
+
+        .join-card {
+            background: white;
+
+            border-radius: 25px;
+
+            padding: 28px 24px;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+
+            text-align: center;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .join-icon {
+            width: 70px;
+
+            height: 70px;
+
+            border-radius: 22px;
+
+            background: #e7f7f5;
+
+            margin: 0 auto 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 34px;
+        }
+
+        .join-card h2 {
+            margin: 0;
+
+            color: #1b2b7a;
+
+            font-size: 25px;
+        }
+
+        .subtitle {
+            margin-top: 7px;
+
+            color: #777;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-top: 24px;
+
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #333;
+        }
+
+        .code-wrapper {
+            position: relative;
+        }
+
+        .code-icon {
+            position: absolute;
+
+            left: 15px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 18px;
+
+            pointer-events: none;
         }
 
         input {
             width: 100%;
-            padding: 13px;
+
+            padding: 15px 14px 15px 45px;
+
             border-radius: 14px;
-            border: 1px solid #ccc;
-            margin-bottom: 18px;
-            text-align: center;
+
+            border: 1px solid #ddd;
+
+            background: #fafafa;
+
+            color: #1b2b7a;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
             letter-spacing: 3px;
+
+            text-align: center;
+
+            outline: none;
+
+            text-transform: uppercase;
+
+            transition: border 0.2s ease,
+                        box-shadow 0.2s ease,
+                        background 0.2s ease;
         }
 
-        button {
-            width: 100%;
-            padding: 14px;
-            border-radius: 25px;
-            border: none;
-            background: #2bb6a8;
-            color: white;
-            font-size: 15px;
+        input:focus {
+            border-color: #2bb6a8;
+
+            background: white;
+
+            box-shadow: 0 0 0 3px rgba(43,182,168,0.12);
         }
+
+        input::placeholder {
+            color: #999;
+
+            font-weight: normal;
+
+            letter-spacing: 1px;
+        }
+
+
+        /* ================= INFO ================= */
+
+        .info-box {
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border-radius: 13px;
+
+            background: #f5f9f8;
+
+            color: #777;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= BUTTON ================= */
+
+        .join-btn {
+            width: 100%;
+
+            min-height: 50px;
+
+            margin-top: 20px;
+
+            border: none;
+
+            border-radius: 26px;
+
+            background: #2bb6a8;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: transform 0.15s ease,
+                        box-shadow 0.15s ease;
+        }
+
+        .join-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow: 0 6px 18px rgba(43,182,168,0.3);
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 600px) {
+
+            .page-wrapper {
+                padding: 12px 10px 25px;
+            }
+
+            .top-bar {
+                padding: 14px 16px;
+
+                border-radius: 18px;
+            }
+
+            .brand {
+                font-size: 21px;
+            }
+
+            .join-card {
+                padding: 24px 17px;
+
+                border-radius: 20px;
+            }
+
+            .join-card h2 {
+                font-size: 22px;
+            }
+
+            input {
+                font-size: 15px;
+
+                letter-spacing: 2px;
+            }
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-<div class="center-box">
+<div class="page-wrapper">
 
-    <div class="card">
-        <h2>Join Group</h2>
+    <div class="join-container">
 
-        <form method="POST">
-            <input type="text" name="group_code" placeholder="Enter Group Code" required>
-            <button>Join Group</button>
-        </form>
+
+        <!-- TOP BAR -->
+
+        <div class="top-bar">
+
+            <div class="brand">
+                Split<span>zee</span>
+            </div>
+
+            <a
+                href="/groups"
+                class="back-top"
+                title="Back to Groups">
+                ←
+            </a>
+
+        </div>
+
+
+        <!-- JOIN CARD -->
+
+        <div class="join-card">
+
+
+            <!-- HEADER -->
+
+            <div class="join-icon">
+                🔗
+            </div>
+
+            <h2>
+                Join Group
+            </h2>
+
+            <div class="subtitle">
+                Enter the group code shared by your trip organizer.
+            </div>
+
+
+            <!-- FORM -->
+
+            <form method="POST">
+
+                <div class="form-group">
+
+                    <label
+                        class="form-label"
+                        for="group_code">
+
+                        Group Code
+
+                    </label>
+
+                    <div class="code-wrapper">
+
+                        <span class="code-icon">
+                            🔑
+                        </span>
+
+                        <input
+                            id="group_code"
+                            type="text"
+                            name="group_code"
+                            placeholder="ENTER CODE"
+                            maxlength="6"
+                            autocomplete="off"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+                    💡 Ask a member of the group for the 6-character group code.
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="join-btn">
+
+                    🔗 Join Group
+
+                </button>
+
+            </form>
+
+        </div>
+
     </div>
 
 </div>
+
+
+<script>
+
+    const codeInput = document.getElementById("group_code");
+
+    codeInput.addEventListener("input", function() {
+
+        this.value = this.value
+            .replace(/[^a-zA-Z0-9]/g, "")
+            .toUpperCase()
+            .slice(0, 6);
+
+    });
+
+</script>
+
 
 </body>
 </html>
