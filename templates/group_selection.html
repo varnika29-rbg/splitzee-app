@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <title>Splitzee | Groups</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        * { box-sizing: border-box; }
 
-        html, body {
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            min-height: 100%;
         }
 
         body {
@@ -23,51 +29,324 @@
             background-attachment: fixed;
 
             background-color: #2bb6a8;
+            color: #333;
         }
 
-        /* ✅ ACTUAL CENTERING */
-        .center-box {
+
+        /* ================= PAGE ================= */
+
+        .page-wrapper {
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;   /* ← THIS is the real fix */
+            padding: 30px 15px 40px;
         }
 
-        .card {
-            background: white;
-            width: 360px;
-            padding: 30px;
+        .groups-container {
+            width: 100%;
+            max-width: 620px;
+            margin: auto;
+        }
+
+
+        /* ================= TOP BAR ================= */
+
+        .top-bar {
+            background: rgba(255,255,255,0.96);
+
             border-radius: 22px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            text-align: center;
+
+            padding: 17px 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+
+            margin-bottom: 16px;
         }
 
-        h2 { color: #1b2b7a; }
-        .sub { color: #666; margin-bottom: 20px; }
-
-        .group-list a {
-            display: block;
-            padding: 14px;
-            margin-bottom: 10px;
-            border-radius: 25px;
-            background: #eef7f6;
+        .brand {
+            font-size: 23px;
+            font-weight: bold;
             color: #1b2b7a;
+        }
+
+        .brand span {
+            color: #2bb6a8;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+
+            background: #e7f7f5;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
             text-decoration: none;
+
+            font-size: 19px;
+        }
+
+
+        /* ================= WELCOME CARD ================= */
+
+        .welcome-card {
+            background: white;
+
+            border-radius: 25px;
+
+            padding: 25px 22px;
+
+            text-align: center;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+
+            margin-bottom: 16px;
+        }
+
+        .welcome-icon {
+            width: 66px;
+            height: 66px;
+
+            border-radius: 21px;
+
+            background: #e7f7f5;
+
+            margin: 0 auto 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 31px;
+        }
+
+        .welcome-card h2 {
+            margin: 0;
+
+            color: #1b2b7a;
+
+            font-size: 25px;
+        }
+
+        .welcome-subtitle {
+            margin-top: 7px;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+
+        /* ================= GROUP SECTION ================= */
+
+        .groups-card {
+            background: white;
+
+            border-radius: 23px;
+
+            padding: 20px;
+
+            box-shadow: 0 8px 25px rgba(0,0,0,0.14);
+
+            margin-bottom: 16px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 13px;
+        }
+
+        .section-title {
+            color: #1b2b7a;
+
+            font-size: 17px;
+
             font-weight: bold;
         }
 
-        .group-list a:hover { background: #dff1ee; }
+        .section-count {
+            font-size: 12px;
 
-        .empty { color: #777; margin-bottom: 20px; }
+            color: #888;
+        }
+
+
+        /* ================= GROUP LIST ================= */
+
+        .group-list {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+        .group-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 13px;
+
+            border-radius: 15px;
+
+            background: #f5f9f8;
+
+            border: 1px solid #e5eeee;
+
+            text-decoration: none;
+
+            transition: all 0.2s ease;
+        }
+
+        .group-item:hover {
+            transform: translateY(-2px);
+
+            border-color: #2bb6a8;
+
+            box-shadow: 0 5px 14px rgba(43,182,168,0.12);
+        }
+
+        .group-icon {
+            width: 42px;
+            height: 42px;
+
+            min-width: 42px;
+
+            border-radius: 13px;
+
+            background: #e7f7f5;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+        }
+
+        .group-info {
+            flex: 1;
+
+            min-width: 0;
+        }
+
+        .group-name {
+            color: #333;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+        .group-code {
+            color: #888;
+
+            font-size: 11px;
+
+            margin-top: 4px;
+        }
+
+        .group-arrow {
+            color: #2bb6a8;
+
+            font-size: 20px;
+        }
+
+
+        /* ================= EMPTY STATE ================= */
+
+        .empty {
+            text-align: center;
+
+            padding: 25px 10px;
+
+            color: #777;
+        }
+
+        .empty-icon {
+            font-size: 36px;
+
+            margin-bottom: 8px;
+        }
+
+        .empty-title {
+            font-size: 15px;
+
+            font-weight: bold;
+
+            color: #555;
+        }
+
+        .empty-text {
+            font-size: 12px;
+
+            margin-top: 5px;
+
+            color: #888;
+        }
+
+
+        /* ================= ACTIONS ================= */
+
+        .actions {
+            background: white;
+
+            border-radius: 23px;
+
+            padding: 20px;
+
+            box-shadow: 0 8px 25px rgba(0,0,0,0.14);
+        }
 
         .action {
-            display: block;
-            padding: 14px;
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+
+            min-height: 49px;
+
             border-radius: 25px;
-            background: #2bb6a8;
-            color: white;
+
+            margin-bottom: 10px;
+
             text-decoration: none;
-            margin-bottom: 12px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            background: #2bb6a8;
+
+            color: white;
+
+            transition: transform 0.15s ease,
+                        box-shadow 0.15s ease;
+        }
+
+        .action:hover {
+            transform: translateY(-2px);
+
+            box-shadow: 0 6px 18px rgba(43,182,168,0.3);
         }
 
         .action.secondary {
@@ -75,38 +354,216 @@
         }
 
         .logout {
-            font-size: 13px;
+            display: block;
+
+            text-align: center;
+
+            margin-top: 15px;
+
             color: #888;
+
+            font-size: 13px;
+
             text-decoration: none;
         }
+
+        .logout:hover {
+            color: #c62828;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 600px) {
+
+            .page-wrapper {
+                padding: 12px 10px 25px;
+            }
+
+            .top-bar {
+                padding: 14px 16px;
+
+                border-radius: 18px;
+            }
+
+            .brand {
+                font-size: 21px;
+            }
+
+            .welcome-card {
+                padding: 22px 16px;
+
+                border-radius: 20px;
+            }
+
+            .welcome-card h2 {
+                font-size: 22px;
+            }
+
+            .groups-card,
+            .actions {
+                padding: 16px;
+
+                border-radius: 19px;
+            }
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-<div class="center-box">
+<div class="page-wrapper">
 
-    <div class="card">
+    <div class="groups-container">
 
-        <h2>Hello {{ username }}</h2>
-        <div class="sub">Active trips (not settled)</div>
 
-        <div class="group-list">
-            {% if groups %}
-                {% for g in groups %}
-                    <a href="/group/{{ g.code }}">{{ g.name }}</a>
-                {% endfor %}
-            {% else %}
-                <div class="empty">No group yet</div>
-            {% endif %}
+        <!-- TOP BAR -->
+
+        <div class="top-bar">
+
+            <div class="brand">
+                Split<span>zee</span>
+            </div>
+
+            <a
+                href="/profile"
+                class="profile-icon"
+                title="My Profile">
+                👤
+            </a>
+
         </div>
 
-        <a class="action" href="/create-group">➕ Create Group</a>
-        <a class="action" href="/join-group">🔗 Join Group</a>
-        <a class="action secondary" href="/history">📜 History</a>
 
-        <br>
-        <a class="logout" href="/logout">Logout</a>
+        <!-- WELCOME -->
+
+        <div class="welcome-card">
+
+            <div class="welcome-icon">
+                👋
+            </div>
+
+            <h2>
+                Hello {{ username }}
+            </h2>
+
+            <div class="welcome-subtitle">
+                Choose an active trip to continue
+            </div>
+
+        </div>
+
+
+        <!-- GROUPS -->
+
+        <div class="groups-card">
+
+            <div class="section-heading">
+
+                <div class="section-title">
+                    🧳 Active Trips
+                </div>
+
+                <div class="section-count">
+                    {{ groups|length }} group{% if groups|length != 1 %}s{% endif %}
+                </div>
+
+            </div>
+
+
+            <div class="group-list">
+
+                {% if groups %}
+
+                    {% for g in groups %}
+
+                        <a
+                            class="group-item"
+                            href="/group/{{ g.code }}">
+
+                            <div class="group-icon">
+                                ✈️
+                            </div>
+
+                            <div class="group-info">
+
+                                <div class="group-name">
+                                    {{ g.name }}
+                                </div>
+
+                                <div class="group-code">
+                                    Code: {{ g.code }}
+                                </div>
+
+                            </div>
+
+                            <div class="group-arrow">
+                                →
+                            </div>
+
+                        </a>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🧳
+                        </div>
+
+                        <div class="empty-title">
+                            No active trips yet
+                        </div>
+
+                        <div class="empty-text">
+                            Create a new group or join an existing one.
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="actions">
+
+            <a
+                class="action"
+                href="/create-group">
+                ➕ Create Group
+            </a>
+
+            <a
+                class="action"
+                href="/join-group">
+                🔗 Join Group
+            </a>
+
+            <a
+                class="action secondary"
+                href="/history">
+                📜 View History
+            </a>
+
+            <a
+                class="logout"
+                href="/logout">
+                Logout
+            </a>
+
+        </div>
+
 
     </div>
 
