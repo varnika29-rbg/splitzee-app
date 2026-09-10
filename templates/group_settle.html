@@ -1,222 +1,787 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Splitzee | Summary</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
+    <title>Splitzee | Summary</title>
 
-html, body {
-margin:0;
-padding:0;
-min-height:100vh;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-body{
-font-family:Arial, sans-serif;
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
 
-background-image:url("{{ url_for('static', filename='app-bg.jpeg') }}");
-background-repeat:no-repeat;
-background-position:center center;
-background-size:cover;
-background-attachment:fixed;
+        body {
+            font-family: Arial, sans-serif;
+            color: #1f2937;
 
-background-color:#2bb6a8;
-}
+            background-image:
+                linear-gradient(
+                    rgba(43, 182, 168, 0.88),
+                    rgba(43, 182, 168, 0.88)
+                ),
+                url("{{ url_for('static', filename='app-bg.jpeg') }}");
 
-/* CENTER LAYOUT */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
 
-.center-box{
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:flex-start;
-padding-top:60px;
-padding-bottom:40px;
-}
+        /* =========================
+           PAGE
+        ========================= */
 
-/* MAIN CARD */
+        .page-wrapper {
+            min-height: 100vh;
+            padding: 22px 16px 40px;
+        }
 
-.card{
-background:white;
-max-width:420px;
-width:100%;
-padding:22px;
-border-radius:22px;
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
-}
+        .container {
+            width: 100%;
+            max-width: 520px;
+            margin: 0 auto;
+        }
 
-/* TITLE */
+        /* =========================
+           TOP BAR
+        ========================= */
 
-h2{
-text-align:center;
-color:#1b2b7a;
-margin-bottom:15px;
-}
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
 
-/* TOTAL EXPENSE BOX */
+        .back-btn {
+            width: 42px;
+            height: 42px;
 
-.total-box{
-text-align:center;
-background:#f1f8f7;
-padding:14px;
-border-radius:12px;
-margin-bottom:15px;
-font-size:14px;
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-.total-box span{
-font-size:22px;
-font-weight:bold;
-color:#2bb6a8;
-}
+            background: rgba(255, 255, 255, 0.95);
+            color: #1b2b7a;
 
-/* INFO ROWS */
+            border-radius: 14px;
+            text-decoration: none;
 
-.row{
-display:flex;
-justify-content:space-between;
-padding:6px 0;
-font-size:14px;
-}
+            font-size: 22px;
+            font-weight: bold;
 
-/* SETTLEMENT CARDS */
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 
-.settlement{
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:#f7f7f7;
-padding:12px 14px;
-border-radius:12px;
-margin:8px 0;
-font-size:14px;
-}
+            transition: 0.2s ease;
+        }
 
-.payer{
-font-weight:bold;
-color:#c62828;
-}
+        .back-btn:hover {
+            transform: translateX(-3px);
+        }
 
-.receiver{
-font-weight:bold;
-color:#2e7d32;
-}
+        .profile-btn {
+            width: 42px;
+            height: 42px;
 
-.arrow{
-color:#555;
-margin:0 6px;
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-.amount{
-font-weight:bold;
-color:#1b2b7a;
-}
+            background: rgba(255, 255, 255, 0.95);
+            color: #1b2b7a;
 
-/* BUTTONS */
+            border-radius: 50%;
+            text-decoration: none;
 
-a{
-display:block;
-margin-top:10px;
-padding:12px;
-text-align:center;
-background:#2bb6a8;
-color:white;
-border-radius:20px;
-text-decoration:none;
-font-size:14px;
-}
+            font-size: 19px;
 
-.gray{
-background:#ccc;
-color:#333;
-}
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 
-/* EMPTY TEXT */
+            transition: 0.2s ease;
+        }
 
-.empty{
-text-align:center;
-font-size:14px;
-color:#777;
-margin-top:10px;
-}
+        .profile-btn:hover {
+            transform: scale(1.05);
+        }
 
-</style>
+        /* =========================
+           MAIN CARD
+        ========================= */
+
+        .card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 28px;
+            padding: 24px;
+
+            box-shadow:
+                0 18px 45px rgba(0, 0, 0, 0.18);
+
+            animation: slideUp 0.45s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .summary-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .summary-icon {
+            width: 62px;
+            height: 62px;
+
+            margin: 0 auto 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            background: linear-gradient(
+                135deg,
+                #2bb6a8,
+                #1b9e91
+            );
+
+            color: white;
+            font-size: 28px;
+
+            box-shadow: 0 8px 20px rgba(43, 182, 168, 0.3);
+        }
+
+        .summary-header h1 {
+            margin: 0;
+
+            color: #172554;
+
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .summary-header p {
+            margin: 6px 0 0;
+
+            color: #7b8494;
+            font-size: 13px;
+        }
+
+        /* =========================
+           TOTAL
+        ========================= */
+
+        .total-box {
+            position: relative;
+            overflow: hidden;
+
+            padding: 22px;
+
+            border-radius: 20px;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #effcf9,
+                    #e5f8f5
+                );
+
+            border: 1px solid #d7f1ed;
+
+            margin-bottom: 18px;
+        }
+
+        .total-label {
+            display: block;
+
+            color: #687783;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            margin-bottom: 6px;
+        }
+
+        .total-amount {
+            display: block;
+
+            color: #149889;
+
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           HIGHLIGHTS
+        ========================= */
+
+        .highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
+
+            margin-bottom: 22px;
+        }
+
+        .highlight {
+            padding: 14px;
+
+            border-radius: 17px;
+
+            background: #f8fafc;
+
+            border: 1px solid #edf0f4;
+        }
+
+        .highlight-label {
+            display: block;
+
+            color: #8a94a3;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            margin-bottom: 5px;
+        }
+
+        .highlight-name {
+            display: block;
+
+            color: #263449;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .highlight-amount {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #2bb6a8;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* =========================
+           SECTION TITLE
+        ========================= */
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            margin-bottom: 12px;
+        }
+
+        .section-title-icon {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: #eaf9f6;
+
+            font-size: 16px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+
+            color: #25314a;
+
+            font-size: 16px;
+        }
+
+        /* =========================
+           SETTLEMENTS
+        ========================= */
+
+        .settlement-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            margin-bottom: 22px;
+        }
+
+        .settlement {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 12px;
+
+            padding: 15px;
+
+            border-radius: 18px;
+
+            background: #f9fafb;
+
+            border: 1px solid #edf0f3;
+
+            transition: 0.2s ease;
+        }
+
+        .settlement:hover {
+            transform: translateY(-2px);
+
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+        }
+
+        .settlement-left {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .people {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+
+            gap: 5px;
+
+            font-size: 13px;
+        }
+
+        .payer {
+            color: #d14343;
+            font-weight: 800;
+        }
+
+        .receiver {
+            color: #258a52;
+            font-weight: 800;
+        }
+
+        .arrow {
+            color: #9aa3af;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .pays-text {
+            color: #7d8794;
+            font-size: 12px;
+        }
+
+        .settlement-amount {
+            flex-shrink: 0;
+
+            padding: 8px 11px;
+
+            border-radius: 12px;
+
+            background: #eaf9f6;
+
+            color: #168f82;
+
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
+        .empty {
+            text-align: center;
+
+            padding: 28px 18px;
+
+            border-radius: 20px;
+
+            background: #f5fbfa;
+
+            border: 1px dashed #bde4de;
+
+            margin-bottom: 22px;
+        }
+
+        .empty-icon {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .empty h3 {
+            margin: 0 0 5px;
+
+            color: #263449;
+
+            font-size: 16px;
+        }
+
+        .empty p {
+            margin: 0;
+
+            color: #89929e;
+
+            font-size: 13px;
+        }
+
+        /* =========================
+           ACTION BUTTONS
+        ========================= */
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+
+            padding: 13px 16px;
+
+            border-radius: 16px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .primary-btn {
+            background: linear-gradient(
+                135deg,
+                #2bb6a8,
+                #1c9f92
+            );
+
+            color: white;
+
+            box-shadow: 0 7px 18px rgba(43, 182, 168, 0.25);
+        }
+
+        .secondary-btn {
+            background: #eef2f5;
+            color: #384454;
+        }
+
+        .danger-btn {
+            background: #fff0f0;
+            color: #c62828;
+        }
+
+        /* =========================
+           DIVIDER
+        ========================= */
+
+        .divider {
+            height: 1px;
+
+            background: #edf0f3;
+
+            margin: 20px 0;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 480px) {
+
+            .page-wrapper {
+                padding: 14px 12px 30px;
+            }
+
+            .card {
+                padding: 19px 16px;
+
+                border-radius: 23px;
+            }
+
+            .summary-header h1 {
+                font-size: 21px;
+            }
+
+            .total-amount {
+                font-size: 27px;
+            }
+
+            .settlement {
+                padding: 13px;
+            }
+
+            .settlement-amount {
+                font-size: 13px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="center-box">
+<div class="page-wrapper">
 
-<div class="card">
+    <div class="container">
 
-<h2>{{ group_name }}</h2>
+        <!-- TOP BAR -->
 
-<!-- TOTAL EXPENSE -->
+        <div class="top-bar">
 
-<div class="total-box">
-Total Expense<br>
-<span>₹{{ total }}</span>
-</div>
+            <a href="/group/{{ group_code }}" class="back-btn">
+                ←
+            </a>
 
-{% if top_payer %}
-<div class="row">
-<span>Paid most</span>
-<span>{{ top_payer }} (₹{{ top_paid }})</span>
-</div>
-{% endif %}
+            <a href="/profile" class="profile-btn">
+                👤
+            </a>
 
-{% if top_ower %}
-<div class="row">
-<span>Owes most</span>
-<span>{{ top_ower }} (₹{{ top_owed }})</span>
-</div>
-{% endif %}
+        </div>
 
-<hr>
 
-<!-- SETTLEMENT LIST -->
+        <!-- MAIN CARD -->
 
-{% if settlements %}
+        <div class="card">
 
-{% for owe,get,amt in settlements %}
+            <!-- HEADER -->
 
-<div class="settlement">
+            <div class="summary-header">
 
-<div>
-<span class="payer">{{ owe }}</span>
-<span class="arrow">pays</span>
-<span class="receiver">{{ get }}</span>
-</div>
+                <div class="summary-icon">
+                    💰
+                </div>
 
-<div class="amount">₹{{ amt }}</div>
+                <h1>{{ group_name }}</h1>
 
-</div>
+                <p>Settlement Summary</p>
 
-{% endfor %}
+            </div>
 
-{% else %}
 
-<p class="empty">All settled 🎉</p>
+            <!-- TOTAL -->
 
-{% endif %}
+            <div class="total-box">
 
-<!-- ACTION BUTTONS -->
+                <span class="total-label">
+                    Total Group Expense
+                </span>
 
-{% if not settled %}
-<a href="/group/{{ group_code }}/mark-settled">✅ Mark as Settled</a>
-{% endif %}
+                <span class="total-amount">
+                    ₹{{ total }}
+                </span>
 
-<a href="/profile">👤 My Profile</a>
+            </div>
 
-<a href="/group/{{ group_code }}" class="gray">⬅ Back</a>
 
-<a href="/groups" class="gray">Groups</a>
+            <!-- HIGHLIGHTS -->
 
-</div>
+            {% if top_payer or top_ower %}
+
+            <div class="highlights">
+
+                {% if top_payer %}
+
+                <div class="highlight">
+
+                    <span class="highlight-label">
+                        💳 PAID MOST
+                    </span>
+
+                    <span class="highlight-name">
+                        {{ top_payer }}
+                    </span>
+
+                    <span class="highlight-amount">
+                        ₹{{ top_paid }}
+                    </span>
+
+                </div>
+
+                {% endif %}
+
+
+                {% if top_ower %}
+
+                <div class="highlight">
+
+                    <span class="highlight-label">
+                        📤 OWES MOST
+                    </span>
+
+                    <span class="highlight-name">
+                        {{ top_ower }}
+                    </span>
+
+                    <span class="highlight-amount">
+                        ₹{{ top_owed }}
+                    </span>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="divider"></div>
+
+
+            <!-- SETTLEMENT SECTION -->
+
+            <div class="section-title">
+
+                <div class="section-title-icon">
+                    🔄
+                </div>
+
+                <h2>Who Pays Whom?</h2>
+
+            </div>
+
+
+            {% if settlements %}
+
+            <div class="settlement-list">
+
+                {% for owe,get,amt in settlements %}
+
+                <div class="settlement">
+
+                    <div class="settlement-left">
+
+                        <div class="people">
+
+                            <span class="payer">
+                                {{ owe }}
+                            </span>
+
+                            <span class="pays-text">
+                                pays
+                            </span>
+
+                            <span class="receiver">
+                                {{ get }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="settlement-amount">
+                        ₹{{ amt }}
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🎉
+                </div>
+
+                <h3>Everything is settled!</h3>
+
+                <p>
+                    No pending payments between group members.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+                {% if not settled %}
+
+                <a
+                    href="/group/{{ group_code }}/mark-settled"
+                    class="btn primary-btn"
+                >
+                    ✅ Mark as Settled
+                </a>
+
+                {% endif %}
+
+
+                <a
+                    href="/profile"
+                    class="btn secondary-btn"
+                >
+                    👤 My Profile
+                </a>
+
+
+                <a
+                    href="/group/{{ group_code }}"
+                    class="btn secondary-btn"
+                >
+                    ← Back to Group
+                </a>
+
+
+                <a
+                    href="/groups"
+                    class="btn secondary-btn"
+                >
+                    🗂 Groups
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 </body>
 </html>
-
